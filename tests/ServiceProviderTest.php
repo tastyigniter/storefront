@@ -6,10 +6,8 @@ namespace Igniter\Storefront\Tests;
 
 use Igniter\Main\Classes\ThemeManager;
 use Igniter\PayRegister\Models\PaymentProfile;
-use Igniter\User\Models\Customer;
-use Igniter\Storefront\Storefront;
 use Igniter\Storefront\Support\StorefrontRoutes;
-use Illuminate\Support\Facades\File;
+use Igniter\User\Models\Customer;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;

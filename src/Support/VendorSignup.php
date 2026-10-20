@@ -16,7 +16,7 @@ class VendorSignup
     public static bool $enabled = false;
 
     /** @var (callable(array<string, mixed>): string)|null */
-    public static $handler = null;
+    public static $handler;
 
     public static function available(): bool
     {

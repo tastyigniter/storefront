@@ -112,7 +112,7 @@ it('offers nothing where group ordering is off or there is no location', functio
     GroupOrderSwitch::$enabled = false;
     expect(GroupOrders::present())->toBeNull();
 
-    (fn() => $this->model = null)->call(resolve('location'));
+    (fn(): null => $this->model = null)->call(resolve('location'));
     Location::resetSession();
     LocationModel::query()->delete();
     expect(GroupOrders::present())->toBeNull();
@@ -328,15 +328,15 @@ it('keeps a guest on the host table when the menu loads', function(): void {
 
 it('saves the host table onto the group order', function(): void {
     DineInTables::$enabled = true;
-    $order = new class
+    $order = new class extends Order
     {
-        public ?int $dining_table_id = null;
-
         public int $saves = 0;
 
-        public function saveQuietly(): void
+        public function saveQuietly(array $options = []): bool
         {
             $this->saves++;
+
+            return true;
         }
     };
     fakeManager(fakeGroupOrder(['host' => $order]));

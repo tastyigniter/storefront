@@ -12,8 +12,8 @@ use Igniter\Main\Classes\ThemeManager;
 use Igniter\Main\Models\Theme as ThemeModel;
 use Igniter\Pages\Classes\MenuManager;
 use Igniter\Pages\Models\Menu as StaticMenu;
-use Igniter\System\Models\Settings;
 use Igniter\Storefront\Support\ThemeContent;
+use Igniter\System\Models\Settings;
 use Mockery;
 use RuntimeException;
 
@@ -60,6 +60,13 @@ it('returns no links when a menu cannot be resolved', function(): void {
     $this->mock(MenuManager::class)->shouldReceive('generateReferences')->andThrow(new RuntimeException('broken'));
 
     expect(ThemeContent::menu('main-menu'))->toBe([]);
+});
+
+it('translates menu titles saved as language keys', function(): void {
+    $title = (fn(string $title): string => static::menuTitle($title))->bindTo(null, ThemeContent::class);
+
+    expect($title('Order online'))->toBe('Order online')
+        ->and($title('igniterlabs.plum::default.menu_menu'))->toBe(lang('igniterlabs.plum::default.menu_menu'));
 });
 
 it('keeps links to other sites as they are', function(): void {

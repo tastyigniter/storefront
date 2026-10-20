@@ -16,6 +16,7 @@ use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Storefront\Actions\Fulfilment;
 use Igniter\Storefront\Storefront;
 use Igniter\User\Facades\Auth;
+use Igniter\User\Models\Address;
 use Igniter\User\Models\Customer;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Collection;
@@ -140,7 +141,10 @@ class StorefrontState
     {
         $addresses = [];
 
-        foreach ($customer->addresses()->get() as $address) {
+        /** @var \Illuminate\Database\Eloquent\Collection<int, Address> $saved */
+        $saved = $customer->addresses()->get();
+
+        foreach ($saved as $address) {
             $addresses[] = [
                 'id' => (int)$address->getKey(),
                 'label' => Fulfilment::formatAddress($address),
@@ -233,7 +237,7 @@ class StorefrontState
             return null;
         }
 
-        $percentage = CartSettings::get('tip_value_type', 'F') === 'P';
+        $percentage = (CartSettings::get('tip_value_type') ?? 'F') === 'P';
 
         return [
             'percentage' => $percentage,
@@ -261,7 +265,10 @@ class StorefrontState
             return [];
         }
 
-        return Menu::query()->with('media')->whereKey($ids)->get()
+        /** @var \Illuminate\Database\Eloquent\Collection<int, Menu> $menus */
+        $menus = Menu::query()->with('media')->whereKey($ids)->get();
+
+        return $menus
             ->mapWithKeys(fn(Menu $menu): array => [(int)$menu->getKey() => $menu->getThumb(['width' => 160, 'height' => 160])])
             ->all();
     }

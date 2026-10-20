@@ -9,9 +9,9 @@ use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Local\Models\LocationArea;
 use Igniter\Main\Classes\ThemeManager;
+use Igniter\Storefront\Tests\TestCase;
 use Igniter\User\Models\Customer;
 use Igniter\User\Models\User;
-use Igniter\Storefront\Tests\TestCase;
 use Illuminate\Support\Facades\URL;
 use Mockery\MockInterface;
 

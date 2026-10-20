@@ -1,74 +1,62 @@
 parameters:
 	ignoreErrors:
 		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:hasCollection\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Actions/Fulfilment.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:hasDelivery\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Actions/Fulfilment.php
+
+		-
+			message: '#^Parameter \#1 \$code of static method Igniter\\Local\\Facades\\Location\:\:updateOrderType\(\) expects void\|null, string given\.$#'
+			identifier: argument.type
+			count: 3
+			path: src/Actions/Fulfilment.php
+
+		-
+			message: '#^Parameter \#1 \$dateTime of static method Igniter\\Local\\Facades\\Location\:\:updateScheduleTimeSlot\(\) expects void, Carbon\\Carbon given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Actions/Fulfilment.php
+
+		-
+			message: '#^Parameter \#1 \$timestamp of static method Igniter\\Local\\Facades\\Location\:\:checkOrderTime\(\) expects void\|null, Carbon\\Carbon given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Actions/Fulfilment.php
+
+		-
+			message: '#^Parameter \#2 \$isAsap of static method Igniter\\Local\\Facades\\Location\:\:updateScheduleTimeSlot\(\) expects void\|null, false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Actions/Fulfilment.php
+
+		-
+			message: '#^Parameter \#2 \$isAsap of static method Igniter\\Local\\Facades\\Location\:\:updateScheduleTimeSlot\(\) expects void\|null, true given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Actions/Fulfilment.php
+
+		-
+			message: '#^Parameter \#2 \$orderTypeCode of static method Igniter\\Local\\Facades\\Location\:\:checkOrderTime\(\) expects void\|null, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Actions/Fulfilment.php
+
+		-
 			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:allowGuestOrder\(\)\.$#'
 			identifier: method.notFound
 			count: 1
 			path: src/Actions/PlaceOrder.php
 
 		-
-			message: '#^Parameter \#1 \$code of static method Igniter\\Local\\Facades\\Location\:\:updateOrderType\(\) expects void\|null, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Actions/SearchFulfillment.php
-
-		-
-			message: '#^Parameter \#1 \$code of static method Igniter\\Local\\Facades\\Location\:\:updateOrderType\(\) expects void\|null, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Actions/UpdateFulfilment.php
-
-		-
-			message: '#^Parameter \#1 \$dateTime of static method Igniter\\Local\\Facades\\Location\:\:updateScheduleTimeSlot\(\) expects void, Carbon\\Carbon given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Actions/UpdateFulfilment.php
-
-		-
-			message: '#^Parameter \#1 \$timestamp of static method Igniter\\Local\\Facades\\Location\:\:checkOrderTime\(\) expects void\|null, Carbon\\Carbon given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Actions/UpdateFulfilment.php
-
-		-
-			message: '#^Parameter \#2 \$isAsap of static method Igniter\\Local\\Facades\\Location\:\:updateScheduleTimeSlot\(\) expects void\|null, false given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Actions/UpdateFulfilment.php
-
-		-
-			message: '#^Parameter \#2 \$isAsap of static method Igniter\\Local\\Facades\\Location\:\:updateScheduleTimeSlot\(\) expects void\|null, true given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Actions/UpdateFulfilment.php
-
-		-
-			message: '#^Parameter \#2 \$orderTypeCode of static method Igniter\\Local\\Facades\\Location\:\:checkOrderTime\(\) expects void\|null, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Actions/UpdateFulfilment.php
-
-		-
-			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:hasCollection\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Actions/UpdateSession.php
-
-		-
-			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:hasDelivery\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Actions/UpdateSession.php
-
-		-
-			message: '#^Parameter \#1 \$code of static method Igniter\\Local\\Facades\\Location\:\:updateOrderType\(\) expects void\|null, string given\.$#'
-			identifier: argument.type
-			count: 1
-			path: src/Actions/UpdateSession.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_name\.$#'
-			identifier: property.notFound
+			message: '#^Relation ''address'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
 			count: 1
 			path: src/Http/Controllers/Account/AddressController.php
 
@@ -85,16 +73,28 @@ parameters:
 			path: src/Http/Controllers/Account/AddressController.php
 
 		-
-			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			message: '#^Relation ''payment_method'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
 			identifier: larastan.relationExistence
 			count: 1
 			path: src/Http/Controllers/Account/AddressController.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_name\.$#'
-			identifier: property.notFound
+			message: '#^Relation ''status'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
 			count: 1
-			path: src/Http/Controllers/Account/OrderController.php
+			path: src/Http/Controllers/Account/AddressController.php
+
+		-
+			message: '#^Relation ''status_history'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/Account/AddressController.php
+
+		-
+			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/Account/AddressController.php
 
 		-
 			message: '#^Call to an undefined method Igniter\\User\\Models\\Customer\:\:orders\(\)\.$#'
@@ -103,6 +103,12 @@ parameters:
 			path: src/Http/Controllers/Account/OrderController.php
 
 		-
+			message: '#^Relation ''address'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/Account/OrderController.php
+
+		-
 			message: '#^Relation ''location'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
 			identifier: larastan.relationExistence
 			count: 2
@@ -115,16 +121,28 @@ parameters:
 			path: src/Http/Controllers/Account/OrderController.php
 
 		-
+			message: '#^Relation ''payment_method'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/Account/OrderController.php
+
+		-
+			message: '#^Relation ''status'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/Account/OrderController.php
+
+		-
+			message: '#^Relation ''status_history'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/Account/OrderController.php
+
+		-
 			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
 			identifier: larastan.relationExistence
 			count: 2
 			path: src/Http/Controllers/Account/OrderController.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_name\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Http/Controllers/Account/ReservationController.php
 
 		-
 			message: '#^Call to an undefined method Igniter\\User\\Models\\Customer\:\:reservations\(\)\.$#'
@@ -133,6 +151,12 @@ parameters:
 			path: src/Http/Controllers/Account/ReservationController.php
 
 		-
+			message: '#^Relation ''address'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/Account/ReservationController.php
+
+		-
 			message: '#^Relation ''location'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
 			identifier: larastan.relationExistence
 			count: 1
@@ -151,16 +175,28 @@ parameters:
 			path: src/Http/Controllers/Account/ReservationController.php
 
 		-
-			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			message: '#^Relation ''payment_method'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
 			identifier: larastan.relationExistence
 			count: 1
 			path: src/Http/Controllers/Account/ReservationController.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_name\.$#'
-			identifier: property.notFound
+			message: '#^Relation ''status'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
 			count: 1
-			path: src/Http/Controllers/BookingController.php
+			path: src/Http/Controllers/Account/ReservationController.php
+
+		-
+			message: '#^Relation ''status_history'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/Account/ReservationController.php
+
+		-
+			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/Account/ReservationController.php
 
 		-
 			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:getMinReservationGuestCount\(\)\.$#'
@@ -169,6 +205,12 @@ parameters:
 			path: src/Http/Controllers/BookingController.php
 
 		-
+			message: '#^Relation ''address'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/BookingController.php
+
+		-
 			message: '#^Relation ''location'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
 			identifier: larastan.relationExistence
 			count: 1
@@ -177,7 +219,7 @@ parameters:
 		-
 			message: '#^Relation ''location'' is not found in Igniter\\Reservation\\Models\\Reservation model\.$#'
 			identifier: larastan.relationExistence
-			count: 1
+			count: 2
 			path: src/Http/Controllers/BookingController.php
 
 		-
@@ -187,16 +229,28 @@ parameters:
 			path: src/Http/Controllers/BookingController.php
 
 		-
-			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			message: '#^Relation ''payment_method'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
 			identifier: larastan.relationExistence
 			count: 1
 			path: src/Http/Controllers/BookingController.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_name\.$#'
-			identifier: property.notFound
+			message: '#^Relation ''status'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
 			count: 1
-			path: src/Http/Controllers/CheckoutController.php
+			path: src/Http/Controllers/BookingController.php
+
+		-
+			message: '#^Relation ''status_history'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/BookingController.php
+
+		-
+			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/BookingController.php
 
 		-
 			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:allowGuestOrder\(\)\.$#'
@@ -205,6 +259,12 @@ parameters:
 			path: src/Http/Controllers/CheckoutController.php
 
 		-
+			message: '#^Relation ''address'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/CheckoutController.php
+
+		-
 			message: '#^Relation ''location'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
 			identifier: larastan.relationExistence
 			count: 2
@@ -217,80 +277,290 @@ parameters:
 			path: src/Http/Controllers/CheckoutController.php
 
 		-
+			message: '#^Relation ''payment_method'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/CheckoutController.php
+
+		-
+			message: '#^Relation ''status'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/CheckoutController.php
+
+		-
+			message: '#^Relation ''status_history'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/CheckoutController.php
+
+		-
 			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
 			identifier: larastan.relationExistence
 			count: 2
 			path: src/Http/Controllers/CheckoutController.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_name\.$#'
-			identifier: property.notFound
+			message: '#^Access to property \$customer on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
 			count: 1
-			path: src/Http/Controllers/HomeController.php
+			path: src/Http/Controllers/GroupOrderController.php
 
 		-
-			message: '#^Relation ''location'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
-			identifier: larastan.relationExistence
+			message: '#^Call to method clearCurrent\(\) on an unknown class IgniterLabs\\GroupOrder\\Classes\\Manager\.$#'
+			identifier: class.notFound
 			count: 1
-			path: src/Http/Controllers/HomeController.php
+			path: src/Http/Controllers/GroupOrderController.php
 
 		-
-			message: '#^Relation ''menus'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: src/Http/Controllers/HomeController.php
-
-		-
-			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: src/Http/Controllers/HomeController.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_name\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Http/Controllers/MenuController.php
-
-		-
-			message: '#^Relation ''location'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: src/Http/Controllers/MenuController.php
-
-		-
-			message: '#^Relation ''menus'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: src/Http/Controllers/MenuController.php
-
-		-
-			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
-			identifier: larastan.relationExistence
-			count: 1
-			path: src/Http/Controllers/MenuController.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$content\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Http/Controllers/PageController.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$meta_description\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Http/Controllers/PageController.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$title\.$#'
-			identifier: property.notFound
+			message: '#^Call to method getGroupOrder\(\) on an unknown class IgniterLabs\\GroupOrder\\Classes\\Manager\.$#'
+			identifier: class.notFound
 			count: 2
-			path: src/Http/Controllers/PageController.php
+			path: src/Http/Controllers/GroupOrderController.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_name\.$#'
-			identifier: property.notFound
+			message: '#^Call to method getGuest\(\) on an unknown class IgniterLabs\\GroupOrder\\Classes\\Manager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Call to method guests\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Call to method handle\(\) on an unknown class IgniterLabs\\GroupOrder\\Actions\\CancelGroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Call to method handle\(\) on an unknown class IgniterLabs\\GroupOrder\\Actions\\JoinGroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Call to method handle\(\) on an unknown class IgniterLabs\\GroupOrder\\Actions\\LeaveGroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Call to method handle\(\) on an unknown class IgniterLabs\\GroupOrder\\Actions\\LockGroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Call to method handle\(\) on an unknown class IgniterLabs\\GroupOrder\\Actions\\RemoveGuest\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Call to method handle\(\) on an unknown class IgniterLabs\\GroupOrder\\Actions\\SendInvite\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Call to method handle\(\) on an unknown class IgniterLabs\\GroupOrder\\Actions\\StartGroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Call to method handle\(\) on an unknown class IgniterLabs\\GroupOrder\\Actions\\UnlockGroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Call to method isCurrentHost\(\) on an unknown class IgniterLabs\\GroupOrder\\Classes\\Manager\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Call to method putSession\(\) on an unknown class IgniterLabs\\GroupOrder\\Classes\\Manager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Call to method setCurrent\(\) on an unknown class IgniterLabs\\GroupOrder\\Classes\\Manager\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Call to static method findByHash\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Class IgniterLabs\\GroupOrder\\Models\\GroupOrder not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Class IgniterLabs\\GroupOrder\\Models\\Guest not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Method Igniter\\Storefront\\Http\\Controllers\\GroupOrderController\:\:groupOrder\(\) has invalid return type IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Method Igniter\\Storefront\\Http\\Controllers\\GroupOrderController\:\:hostGroupOrder\(\) has invalid return type IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Parameter \$action of method Igniter\\Storefront\\Http\\Controllers\\GroupOrderController\:\:invite\(\) has invalid type IgniterLabs\\GroupOrder\\Actions\\SendInvite\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Parameter \$action of method Igniter\\Storefront\\Http\\Controllers\\GroupOrderController\:\:joinStore\(\) has invalid type IgniterLabs\\GroupOrder\\Actions\\JoinGroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Parameter \$action of method Igniter\\Storefront\\Http\\Controllers\\GroupOrderController\:\:lock\(\) has invalid type IgniterLabs\\GroupOrder\\Actions\\LockGroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Parameter \$action of method Igniter\\Storefront\\Http\\Controllers\\GroupOrderController\:\:removeGuest\(\) has invalid type IgniterLabs\\GroupOrder\\Actions\\RemoveGuest\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Parameter \$action of method Igniter\\Storefront\\Http\\Controllers\\GroupOrderController\:\:store\(\) has invalid type IgniterLabs\\GroupOrder\\Actions\\StartGroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Parameter \$action of method Igniter\\Storefront\\Http\\Controllers\\GroupOrderController\:\:unlock\(\) has invalid type IgniterLabs\\GroupOrder\\Actions\\UnlockGroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Parameter \$cancel of method Igniter\\Storefront\\Http\\Controllers\\GroupOrderController\:\:destroy\(\) has invalid type IgniterLabs\\GroupOrder\\Actions\\CancelGroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Parameter \$leave of method Igniter\\Storefront\\Http\\Controllers\\GroupOrderController\:\:destroy\(\) has invalid type IgniterLabs\\GroupOrder\\Actions\\LeaveGroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/GroupOrderController.php
+
+		-
+			message: '#^Relation ''address'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/HomeController.php
+
+		-
+			message: '#^Relation ''location'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/HomeController.php
+
+		-
+			message: '#^Relation ''menus'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/HomeController.php
+
+		-
+			message: '#^Relation ''payment_method'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/HomeController.php
+
+		-
+			message: '#^Relation ''status'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/HomeController.php
+
+		-
+			message: '#^Relation ''status_history'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/HomeController.php
+
+		-
+			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/HomeController.php
+
+		-
+			message: '#^Relation ''address'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/MenuController.php
+
+		-
+			message: '#^Relation ''location'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/MenuController.php
+
+		-
+			message: '#^Relation ''menus'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/MenuController.php
+
+		-
+			message: '#^Relation ''payment_method'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/MenuController.php
+
+		-
+			message: '#^Relation ''status'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/MenuController.php
+
+		-
+			message: '#^Relation ''status_history'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/MenuController.php
+
+		-
+			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/MenuController.php
+
+		-
+			message: '#^Relation ''address'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
 			count: 1
 			path: src/Http/Controllers/VendorController.php
 
@@ -302,6 +572,24 @@ parameters:
 
 		-
 			message: '#^Relation ''menus'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/VendorController.php
+
+		-
+			message: '#^Relation ''payment_method'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/VendorController.php
+
+		-
+			message: '#^Relation ''status'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/VendorController.php
+
+		-
+			message: '#^Relation ''status_history'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
 			identifier: larastan.relationExistence
 			count: 1
 			path: src/Http/Controllers/VendorController.php
@@ -361,10 +649,232 @@ parameters:
 			path: src/Support/DeliveryCoverage.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
+			message: '#^Access to an undefined property Igniter\\Cart\\Models\\Order\:\:\$diningTable\.$#'
 			identifier: property.notFound
 			count: 1
 			path: src/Support/DineInTables.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:hasDineIn\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Support/DineInTables.php
+
+		-
+			message: '#^Access to property \$customer on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Access to property \$guests on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 3
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Access to property \$hash on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 3
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Access to property \$location on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Access to property \$name on an unknown class IgniterLabs\\GroupOrder\\Models\\Guest\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Access to property \$order on an unknown class IgniterLabs\\GroupOrder\\Models\\Guest\.$#'
+			identifier: class.notFound
+			count: 4
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Access to property \$spending_limit on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:groupOrderEnabled\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method anyGuestsSubmitted\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method clearCurrent\(\) on an unknown class IgniterLabs\\GroupOrder\\Classes\\Manager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method formattedDeliveryAddress\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method getGroupOrder\(\) on an unknown class IgniterLabs\\GroupOrder\\Classes\\Manager\.$#'
+			identifier: class.notFound
+			count: 3
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method getKey\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method getKey\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\Guest\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method getTimeRemaining\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method guestHasSpendingLimit\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method hasDeadline\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 4
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method hasLeft\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\Guest\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method hasSubmittedOrder\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\Guest\.$#'
+			identifier: class.notFound
+			count: 3
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method hostOrder\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method hostPays\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method isCanceled\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method isCompleted\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method isCurrentGuest\(\) on an unknown class IgniterLabs\\GroupOrder\\Classes\\Manager\.$#'
+			identifier: class.notFound
+			count: 3
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method isCurrentHost\(\) on an unknown class IgniterLabs\\GroupOrder\\Classes\\Manager\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method isLocked\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 2
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Call to method isPastDeadline\(\) on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 3
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Class IgniterLabs\\GroupOrder\\Classes\\Manager not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Class IgniterLabs\\GroupOrder\\Models\\GroupOrder not found\.$#'
+			identifier: class.notFound
+			count: 3
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Method Igniter\\Storefront\\Support\\GroupOrders\:\:manager\(\) has invalid return type IgniterLabs\\GroupOrder\\Classes\\Manager\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Parameter \$groupOrder of method Igniter\\Storefront\\Support\\GroupOrders\:\:guests\(\) has invalid type IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Parameter \$groupOrder of method Igniter\\Storefront\\Support\\GroupOrders\:\:invite\(\) has invalid type IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Parameter \$groupOrder of method Igniter\\Storefront\\Support\\GroupOrders\:\:paymentText\(\) has invalid type IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Parameter \$groupOrder of method Igniter\\Storefront\\Support\\GroupOrders\:\:session\(\) has invalid type IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Parameter \$groupOrder of method Igniter\\Storefront\\Support\\GroupOrders\:\:totals\(\) has invalid type IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
+
+		-
+			message: '#^Parameter \$guest of anonymous function has invalid type IgniterLabs\\GroupOrder\\Models\\Guest\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/GroupOrders.php
 
 		-
 			message: '#^Access to an undefined property Igniter\\Local\\Models\\Location\:\:\$working_hours\.$#'
@@ -401,6 +911,24 @@ parameters:
 			identifier: method.notFound
 			count: 2
 			path: src/Support/MenuCatalog.php
+
+		-
+			message: '#^Access to an undefined property Igniter\\Cart\\Models\\Order\:\:\$status\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Support/OrderProgress.php
+
+		-
+			message: '#^Access to an undefined property Igniter\\Cart\\Models\\Order\:\:\$status_history\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Support/OrderProgress.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\:\:isApproved\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/Support/Reviews.php
 
 		-
 			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:getMaxReservationAdvanceTime\(\)\.$#'
@@ -457,43 +985,7 @@ parameters:
 			path: src/Support/Schedules.php
 
 		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$address_1\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Support/StorefrontState.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$address_2\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Support/StorefrontState.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$city\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Support/StorefrontState.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_id\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Support/StorefrontState.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$postcode\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Support/StorefrontState.php
-
-		-
-			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$state\.$#'
-			identifier: property.notFound
-			count: 1
-			path: src/Support/StorefrontState.php
-
-		-
-			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:allowGuestOrder\(\)\.$#'
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:availableOrderTypes\(\)\.$#'
 			identifier: method.notFound
 			count: 1
 			path: src/Support/StorefrontState.php
@@ -507,11 +999,5 @@ parameters:
 		-
 			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:hasDelivery\(\)\.$#'
 			identifier: method.notFound
-			count: 1
-			path: src/Support/StorefrontState.php
-
-		-
-			message: '#^Static method Igniter\\Flame\\Database\\Builder\:\:get\(\) invoked with 2 parameters, 0\-1 required\.$#'
-			identifier: arguments.count
 			count: 1
 			path: src/Support/StorefrontState.php

@@ -48,7 +48,7 @@ class GiftCards
             'product' => '',
             'group' => '',
             'language' => 'en-GB',
-            'purchaserName' => trim((string)($customer->first_name ?? '').' '.(string)($customer->last_name ?? '')),
+            'purchaserName' => trim(($customer->first_name ?? '').' '.($customer->last_name ?? '')),
             'purchaserEmail' => (string)($customer->email ?? ''),
             'recipientName' => '',
             'recipientEmail' => '',

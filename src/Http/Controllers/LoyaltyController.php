@@ -7,6 +7,7 @@ namespace Igniter\Storefront\Http\Controllers;
 use Igniter\Storefront\Http\Concerns\RedirectsFailures;
 use Igniter\Storefront\Http\Concerns\ResolvesStorefrontPage;
 use Igniter\Storefront\Support\LoyaltyRedeem;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class LoyaltyController
@@ -26,7 +27,7 @@ class LoyaltyController
             return back();
         }
 
-        return $this->attempt(function() use ($amount, $state) {
+        return $this->attempt(function() use ($amount, $state): RedirectResponse {
             LoyaltyRedeem::redeem($amount, $state);
 
             return back();

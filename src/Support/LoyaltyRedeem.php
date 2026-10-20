@@ -62,7 +62,7 @@ class LoyaltyRedeem
     public static function redeem(int $amount, array $state): void
     {
         self::guard($amount, $state);
-        self::installed() && self::commit($amount);
+        self::commit($amount);
     }
 
     public static function clear(): void
@@ -71,7 +71,7 @@ class LoyaltyRedeem
             abort(404);
         }
 
-        self::installed() && self::remove();
+        self::remove();
     }
 
     /**
@@ -157,6 +157,10 @@ class LoyaltyRedeem
      */
     protected static function commit(int $amount): void
     {
+        if (!self::installed()) {
+            return;
+        }
+
         resolve(CartManager::class)->applyCondition('loyalty', ['amount' => $amount]);
     }
 
@@ -165,6 +169,10 @@ class LoyaltyRedeem
      */
     protected static function remove(): void
     {
+        if (!self::installed()) {
+            return;
+        }
+
         resolve(CartManager::class)->removeCondition('loyalty');
     }
 

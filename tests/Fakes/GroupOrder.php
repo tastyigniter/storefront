@@ -29,12 +29,12 @@ namespace IgniterLabs\GroupOrder\Classes {
 
             public function isCurrentHost(): bool
             {
-                return $this->groupOrder !== null && $this->host;
+                return $this->groupOrder instanceof GroupOrder && $this->host;
             }
 
             public function isCurrentGuest(): bool
             {
-                return $this->groupOrder !== null && !$this->host;
+                return $this->groupOrder instanceof GroupOrder && !$this->host;
             }
 
             public function getGuest(): ?Guest

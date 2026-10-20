@@ -6,8 +6,8 @@ namespace Igniter\Storefront\Tests\Http;
 
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
-use Igniter\System\Models\Settings;
 use Igniter\Storefront\Support\LocationDirectory;
+use Igniter\System\Models\Settings;
 use Inertia\Testing\AssertableInertia;
 
 beforeEach(function(): void {

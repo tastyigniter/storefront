@@ -12,11 +12,11 @@ use Igniter\Cart\Models\Order;
  */
 final class OrderProgress
 {
-    public const RECEIVED = 1;
+    public const int RECEIVED = 1;
 
-    public const PREPARING = 2;
+    public const int PREPARING = 2;
 
-    public const COMPLETED = 3;
+    public const int COMPLETED = 3;
 
     /**
      * The stage reached, or null when the order was cancelled or has no status yet.

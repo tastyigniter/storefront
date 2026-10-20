@@ -14,7 +14,7 @@ use Illuminate\Pagination\Paginator;
  */
 final class Pagination
 {
-    public const DEFAULT_PER_PAGE = 25;
+    public const int DEFAULT_PER_PAGE = 25;
 
     public static function perPage(): int
     {

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Igniter\Storefront\Tests\Support;
 
 use Igniter\Local\Facades\Location;
+use Igniter\Storefront\Support\DeliveryAddress;
 use Igniter\System\Models\Country;
 use Igniter\System\Models\Settings;
 use Igniter\User\Models\Address;
-use Igniter\Storefront\Support\DeliveryAddress;
 
 beforeEach(function(): void {
     currentLocation();

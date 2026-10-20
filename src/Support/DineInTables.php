@@ -10,6 +10,7 @@ use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Reservation\Models\DiningArea;
 use Igniter\Reservation\Models\DiningTable;
 use Igniter\Storefront\Storefront;
+use Illuminate\Database\Eloquent\Collection;
 
 /**
  * Dining areas and tables for the dine-in order type. The dine-in extension
@@ -27,7 +28,7 @@ class DineInTables
     public static function offered(LocationModel $location): bool
     {
         // hasDineIn() is added to the Location model by the dine-in extension, which method_exists() cannot see.
-        return $location->methodExists('hasDineIn') && (bool)call_user_func([$location, 'hasDineIn']);
+        return $location->methodExists('hasDineIn') && (bool)$location->hasDineIn();
     }
 
     /**
@@ -39,14 +40,18 @@ class DineInTables
             return null;
         }
 
+        /** @var Collection<int, DiningArea> $areas */
         $areas = DiningArea::query()->where('location_id', $location->getKey())->orderBy('name')->get();
         $areaIds = $areas->map(fn($area): int => (int)$area->getKey())->all();
-        $tables = $areaIds === [] ? collect() : DiningTable::query()
-            ->whereIn('dining_area_id', $areaIds)
-            ->whereIsRoot()
-            ->where('is_enabled', true)
-            ->orderByDesc('priority')
-            ->get();
+        /** @var Collection<int, DiningTable> $tables */
+        $tables = $areaIds === []
+            ? new Collection
+            : DiningTable::query()
+                ->whereIn('dining_area_id', $areaIds)
+                ->whereIsRoot()
+                ->where('is_enabled', true)
+                ->orderByDesc('priority')
+                ->get();
 
         // A group-order guest sits at the host's table, not one they pick themselves.
         self::pinHostTable();
@@ -110,7 +115,12 @@ class DineInTables
      */
     public static function pinHostTable(): bool
     {
-        return ($tableId = GroupOrders::hostTableId()) ? self::adopt($tableId) : false;
+        $tableId = GroupOrders::hostTableId();
+        if (!$tableId) {
+            return false;
+        }
+
+        return self::adopt($tableId);
     }
 
     public static function adopt(int $tableId): bool

@@ -8,14 +8,14 @@ use Igniter\Flame\Exception\ApplicationException;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Reservation\Models\DiningArea;
 use Igniter\Reservation\Models\DiningTable;
-use Igniter\System\Models\Country;
-use Igniter\User\Models\Customer;
 use Igniter\Storefront\Support\DineInTables;
 use Igniter\Storefront\Support\GiftCards;
 use Igniter\Storefront\Support\LocationDirectory;
 use Igniter\Storefront\Support\LoyaltyRedeem;
 use Igniter\Storefront\Support\SocialiteLogin;
 use Igniter\Storefront\Support\VendorSignup;
+use Igniter\System\Models\Country;
+use Igniter\User\Models\Customer;
 use Inertia\Testing\AssertableInertia;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -38,7 +38,7 @@ it('rejects dine-in from the header when the location does not offer it', functi
 });
 
 it('lists dining areas and remembers the chosen table', function(): void {
-    expect(fn() => DineInTables::remember(1, 1, 1))
+    expect(fn(): bool => DineInTables::remember(1, 1, 1))
         ->toThrow(ApplicationException::class, 'This location does not offer dine-in.');
 
     $location = currentLocation();
@@ -79,13 +79,17 @@ it('lists dining areas and remembers the chosen table', function(): void {
     expect(session('igniterlabs_dinein.table_id'))->toBe((int)$table->getKey())
         ->and(DineInTables::present($location)['tableId'])->toBe((int)$table->getKey());
 
-    expect(fn() => DineInTables::remember((int)$location->getKey(), (int)$area->getKey(), 999))
+    expect(fn(): bool => DineInTables::remember((int)$location->getKey(), (int)$area->getKey(), 999))
         ->toThrow(ApplicationException::class, 'Choose a table for your dine-in order.');
 
     $solo = LocationModel::factory()->create();
     $only = DiningArea::factory()->create(['location_id' => $solo->getKey(), 'name' => 'Only']);
 
     expect(DineInTables::present($solo)['areaId'])->toBe((int)$only->getKey());
+
+    $empty = LocationModel::factory()->create();
+
+    expect(DineInTables::present($empty))->toMatchArray(['areas' => [], 'tables' => [], 'areaId' => null, 'tableId' => null]);
 });
 
 it('names the table on a dine-in order', function(): void {

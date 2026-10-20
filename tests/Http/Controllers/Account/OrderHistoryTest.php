@@ -12,8 +12,8 @@ use Igniter\Local\Models\ReviewSettings;
 use Igniter\PayRegister\Models\Payment;
 use Igniter\PayRegister\Payments\Cod;
 use Igniter\Reservation\Models\Reservation;
-use Igniter\User\Models\Address;
 use Igniter\Storefront\Http\Concerns\PresentsStorefront;
+use Igniter\User\Models\Address;
 use Inertia\Testing\AssertableInertia;
 
 beforeEach(function(): void {

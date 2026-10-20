@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Igniter\Storefront\Support;
 
 use Igniter\Flame\Exception\ApplicationException;
+use Igniter\Socialite\Classes\ProviderManager;
 use Igniter\Storefront\Storefront;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -22,7 +23,7 @@ class SocialiteLogin
             return self::$manager;
         }
 
-        $class = 'Igniter\\Socialite\\Classes\\ProviderManager';
+        $class = ProviderManager::class;
 
         return class_exists($class) ? resolve($class) : null;
     }

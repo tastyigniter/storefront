@@ -6,8 +6,8 @@ namespace Igniter\Storefront\Tests\Support;
 
 use Igniter\Admin\Models\Status;
 use Igniter\Cart\Models\Order;
-use Igniter\System\Models\Settings;
 use Igniter\Storefront\Support\OrderProgress;
+use Igniter\System\Models\Settings;
 
 beforeEach(function(): void {
     currentLocation();

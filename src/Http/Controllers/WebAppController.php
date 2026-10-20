@@ -21,7 +21,7 @@ class WebAppController
     {
         $name = trim((string)setting('site_name', ''));
         if ($name === '') {
-            $name = (string)Storefront::lang('site.name');
+            $name = Storefront::lang('site.name');
         }
 
         $color = ThemeColors::background();

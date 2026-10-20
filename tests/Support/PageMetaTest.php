@@ -8,8 +8,8 @@ use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Pages\Models\Page;
 use Igniter\Reservation\Models\Reservation;
-use Igniter\System\Models\Settings;
 use Igniter\Storefront\Support\PageMeta;
+use Igniter\System\Models\Settings;
 use Inertia\Testing\AssertableInertia;
 
 beforeEach(function(): void {
@@ -56,7 +56,7 @@ it('has a title for every storefront page', function(string $route, string $titl
 it('falls back to the site details for unknown routes and without a location', function(): void {
     LocationModel::query()->delete();
     Location::resetSession();
-    (fn() => $this->model = null)->call(resolve('location'));
+    (fn(): null => $this->model = null)->call(resolve('location'));
 
     expect(PageMeta::forRoute(null))->toBe(['title' => 'Glass Kitchen', 'description' => PageMeta::siteDescription()])
         ->and(PageMeta::forRoute('igniter.theme.contact')['description'])->toBe('Questions, feedback or a special request? Get in touch at Glass Kitchen.');

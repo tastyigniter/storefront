@@ -9,9 +9,9 @@ use Igniter\Cart\Classes\CartManager;
 use Igniter\Cart\Facades\Cart;
 use Igniter\Cart\Models\CartSettings;
 use Igniter\Cart\Models\Menu;
-use Igniter\User\Models\Address;
 use Igniter\Storefront\Support\Money;
 use Igniter\Storefront\Support\StorefrontState;
+use Igniter\User\Models\Address;
 use RuntimeException;
 
 beforeEach(function(): void {

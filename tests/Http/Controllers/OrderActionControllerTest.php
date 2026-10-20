@@ -60,7 +60,7 @@ it('reorders even when the order location is gone', function(): void {
         ->assertRedirect(route('igniter.theme.order'));
 });
 
-it('will not reorder another customer\'s order', function(): void {
+it("will not reorder another customer's order", function(): void {
     auth('igniter-customer')->logout();
     $order = paidOrder(Customer::factory()->create());
 
@@ -72,7 +72,7 @@ it('will not reorder another customer\'s order', function(): void {
 it('reorders a guest order from its link', function(): void {
     auth('igniter-customer')->logout();
     $menu = Menu::factory()->create(['menu_price' => 10]);
-    $order = paidOrder(null);
+    $order = paidOrder();
     orderWithMenu($order, $menu);
 
     $this->post(route('igniter.theme.order.reorder', ['hash' => $order->hash]))
@@ -129,7 +129,7 @@ it('asks a guest to confirm the order email before cancelling', function(): void
     expect($order->fresh()->isCanceled())->toBeTrue();
 });
 
-it('will not cancel another customer\'s order by repeating their email', function(): void {
+it("will not cancel another customer's order by repeating their email", function(): void {
     $this->location->settings()->create(['item' => 'delivery', 'data' => ['cancellation_timeout' => 10]]);
     $other = Customer::factory()->create();
     $order = paidOrder($other, [

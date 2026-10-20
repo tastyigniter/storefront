@@ -13,6 +13,8 @@ use Igniter\Reservation\Models\Reservation;
 use Igniter\Storefront\Support\StorefrontState;
 use Igniter\Storefront\Support\ThemeContent;
 use Inertia\Testing\AssertableInertia;
+use Mockery;
+use RuntimeException;
 
 beforeEach(function(): void {
     $this->location = currentLocation();
@@ -47,6 +49,13 @@ it('shares the review score and the order lead times of the current location', f
         ->and($location['rating']['score'])->toBeGreaterThan(0.0)
         ->and($location['leadTimes'])->toHaveKeys(['delivery', 'collection'])
         ->and($location['leadTimes']['delivery'])->toBeInt();
+});
+
+it('leaves lead times out when the location cannot list its order types', function(): void {
+    $location = Mockery::mock($this->location)->makePartial();
+    $location->shouldReceive('availableOrderTypes')->andThrow(new RuntimeException('down'));
+
+    expect(StorefrontState::location($location)['leadTimes'])->toBe([]);
 });
 
 it('leaves the rating out when reviews are turned off', function(): void {

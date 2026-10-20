@@ -8,8 +8,8 @@ use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Local\Models\ReviewSettings;
 use Igniter\Reservation\Models\Reservation;
-use Igniter\User\Models\Customer;
 use Igniter\Storefront\Actions\PlaceReservation;
+use Igniter\User\Models\Customer;
 use Inertia\Testing\AssertableInertia;
 use RuntimeException;
 

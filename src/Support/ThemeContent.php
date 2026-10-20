@@ -178,9 +178,7 @@ class ThemeContent
             return $title;
         }
 
-        $translated = lang($title);
-
-        return $translated !== $title ? $translated : $title;
+        return lang($title);
     }
 
     /**

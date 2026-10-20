@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Igniter\System\Models\Settings;
 use Igniter\Storefront\Storefront;
+use Igniter\System\Models\Settings;
 
 it('describes the storefront as an installable app', function(): void {
     Settings::set('site_name', 'Kitchen');

@@ -11,8 +11,8 @@ use Igniter\PayRegister\Payments\AuthorizeNetAim;
 use Igniter\PayRegister\Payments\Cod;
 use Igniter\PayRegister\Payments\Square;
 use Igniter\PayRegister\Payments\Stripe;
-use Igniter\User\Models\Customer;
 use Igniter\Storefront\Support\PaymentClients;
+use Igniter\User\Models\Customer;
 use Mockery;
 
 function paymentWith(object $gateway, ?PaymentProfile $profile = null): Payment

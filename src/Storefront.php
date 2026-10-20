@@ -50,7 +50,7 @@ final class Storefront
      */
     public static function lang(string $key, array $replace = []): string
     {
-        return (string)lang(self::config()->langNamespace.'::default.'.$key, $replace);
+        return lang(self::config()->langNamespace.'::default.'.$key, $replace);
     }
 
     /**

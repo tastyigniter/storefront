@@ -23,6 +23,7 @@ use IgniterLabs\GroupOrder\Actions\SendInvite;
 use IgniterLabs\GroupOrder\Actions\StartGroupOrder;
 use IgniterLabs\GroupOrder\Actions\UnlockGroupOrder;
 use IgniterLabs\GroupOrder\Models\GroupOrder;
+use IgniterLabs\GroupOrder\Models\Guest;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -71,7 +72,7 @@ class GroupOrderController
                 'last_name' => (string)$customer?->last_name,
                 'email' => (string)$customer?->email,
             ],
-            'meta' => PageMeta::make($groupOrder ? GroupOrders::line('text_join_title', (string)$groupOrder->customer?->first_name) : GroupOrders::line('text_invalid_link_title')),
+            'meta' => PageMeta::make($groupOrder instanceof GroupOrder ? GroupOrders::line('text_join_title', (string)$groupOrder->customer?->first_name) : GroupOrders::line('text_invalid_link_title')),
         ]);
     }
 
@@ -162,7 +163,10 @@ class GroupOrderController
     {
         return $this->attempt(function() use ($guestId, $action) {
             $groupOrder = $this->hostGroupOrder();
-            throw_unless($guest = $groupOrder->guests()->find($guestId), new ApplicationException(GroupOrders::line('alert_guest_not_found')));
+            $guest = $groupOrder->guests()->find($guestId);
+            if (!$guest instanceof Guest) {
+                throw new ApplicationException(GroupOrders::line('alert_guest_not_found'));
+            }
 
             $action->handle($groupOrder, $guest);
 

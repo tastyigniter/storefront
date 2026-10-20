@@ -47,5 +47,6 @@ it('ignores a font URL that is not a Google Fonts stylesheet', function(string $
     'https://fonts.googleapis.com.evil/css2?family=Inter',
     'https://user:pass@fonts.googleapis.com/css2?family=Inter',
     'https://fonts.googleapis.com/css2?family=%3Cscript%3E',
+    'https://fonts.googleapis.com/css2?display=swap',
     'not a url',
 ]);

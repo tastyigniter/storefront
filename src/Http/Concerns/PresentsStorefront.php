@@ -15,6 +15,7 @@ use Igniter\Storefront\Support\Money;
 use Igniter\Storefront\Support\OrderProgress;
 use Igniter\Storefront\Support\StorefrontState;
 use Igniter\System\Models\Country;
+use Illuminate\Database\Eloquent\Collection;
 
 trait PresentsStorefront
 {
@@ -29,7 +30,10 @@ trait PresentsStorefront
     {
         $countries = [];
 
-        foreach (Country::query()->whereIsEnabled()->orderBy('country_name')->get(['country_id', 'country_name']) as $country) {
+        /** @var Collection<int, Country> $rows */
+        $rows = Country::query()->whereIsEnabled()->orderBy('country_name')->get(['country_id', 'country_name']);
+
+        foreach ($rows as $country) {
             $countries[] = [
                 'id' => (int)$country->getKey(),
                 'name' => $country->country_name,

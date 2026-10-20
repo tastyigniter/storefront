@@ -78,7 +78,7 @@ class LocationDirectory
 
         foreach ($locations as $index => $location) {
             $model = $coordinates->get($location['id']);
-            $kilometres = $model && $model->location_lat !== null && $model->location_lng !== null
+            $kilometres = $model instanceof LocationModel && $model->location_lat !== null && $model->location_lng !== null
                 ? self::kilometres($from, (float)$model->location_lat, (float)$model->location_lng)
                 : null;
             $distance = $kilometres === null ? null : ($miles ? $kilometres * 0.621371 : $kilometres);

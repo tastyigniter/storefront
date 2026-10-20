@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Igniter\Storefront\Support;
 
+use Igniter\Cart\Models\Order;
 use Igniter\Local\Facades\Location;
 use IgniterLabs\GroupOrder\Classes\Manager;
 use IgniterLabs\GroupOrder\Models\GroupOrder;
@@ -18,7 +19,7 @@ class GroupOrders
 {
     use ReadsKey;
 
-    public const string MANAGER = 'IgniterLabs\\GroupOrder\\Classes\\Manager';
+    public const string MANAGER = Manager::class;
 
     /** Tests can switch the extension off; null means detect it. */
     public static ?bool $installed = null;
@@ -60,12 +61,13 @@ class GroupOrders
 
         $manager = self::manager();
         $order = $manager->isCurrentHost() ? $manager->getGroupOrder()?->hostOrder() : null;
-        if (!is_object($order) || !method_exists($order, 'saveQuietly')) {
+        if (!$order instanceof Order) {
             return;
         }
 
         $tableId = Location::orderType() === 'dinein' ? (int)session('igniterlabs_dinein.table_id') : 0;
-        $order->dining_table_id = $tableId > 0 ? $tableId : null;
+        // dining_table_id is added by the dine-in extension, not the Order model.
+        $order->setAttribute('dining_table_id', $tableId > 0 ? $tableId : null);
         $order->saveQuietly();
     }
 
@@ -131,8 +133,8 @@ class GroupOrders
         $hostOrder = $groupOrder->hostOrder();
 
         return [
-            'id' => (int)$groupOrder->getKey(),
-            'hash' => (string)$groupOrder->hash,
+            'id' => $groupOrder->getKey(),
+            'hash' => $groupOrder->hash,
             'isHost' => $isHost,
             'isGuest' => $manager->isCurrentGuest(),
             'hostName' => $hostName,
@@ -176,7 +178,7 @@ class GroupOrders
 
         return [
             'state' => $state,
-            'hash' => (string)$groupOrder->hash,
+            'hash' => $groupOrder->hash,
             'hostName' => $hostName,
             'title' => $state === 'open' ? self::line('text_join_title', $hostName) : self::line('text_'.$state.'_title'),
             'message' => match ($state) {
@@ -218,8 +220,8 @@ class GroupOrders
     protected static function guests(GroupOrder $groupOrder): array
     {
         return $groupOrder->guests->map(fn(Guest $guest): array => [
-            'id' => (int)$guest->getKey(),
-            'name' => (string)$guest->name,
+            'id' => $guest->getKey(),
+            'name' => $guest->name,
             'status' => match (true) {
                 $guest->hasSubmittedOrder() => 'submitted',
                 $guest->hasLeft() => 'left',

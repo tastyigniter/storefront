@@ -18,6 +18,8 @@ use Igniter\Storefront\Support\CheckoutStatus;
 use Igniter\Storefront\Support\DineInTables;
 use Igniter\Storefront\Support\PageRouter;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 use Mockery;
 
 afterEach(function(): void {
@@ -40,6 +42,24 @@ it('uses the current location for a menu page that needs one', function(): void 
     $location = currentLocation();
 
     expect(page_url('local.menus'))->toBe(url('/'.$location->permalink_slug.'/order'));
+});
+
+it('sends an order link to the picker when no restaurant is chosen', function(): void {
+    LocationModel::query()->delete();
+    Location::resetSession();
+    (fn(): null => $this->model = null)->call(resolve('location'));
+    URL::defaults([]);
+
+    expect(page_url('local.menus'))->toBe(url('/order'));
+});
+
+it('leaves a page name alone when its storefront route cannot be built', function(): void {
+    Route::name('igniter.theme.coverage-missing')->get('coverage-missing/{id}', fn(): string => 'ok');
+    Route::name('igniter.theme.coverage-both')->get('coverage-both/{id}', fn(): string => 'ok');
+    Route::name('igniter.theme.coverage-both.current')->get('coverage-both-current/{id}', fn(): string => 'ok');
+
+    expect(page_url('coverage-missing'))->toBe(url('/coverage-missing'))
+        ->and(page_url('coverage-both'))->toBe(url('/coverage-both'));
 });
 
 it('leaves page names alone when another theme is active', function(): void {

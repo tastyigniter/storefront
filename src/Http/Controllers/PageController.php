@@ -22,6 +22,7 @@ class PageController
     public function show(string $slug): Response
     {
         $page = Page::query()->where('permalink_slug', $slug)->where('status', true)->firstOrFail();
+        assert($page instanceof Page);
 
         // The content accessor can come back empty (e.g. a missing translation); use the stored copy then.
         $content = (string)$page->content ?: html_entity_decode((string)$page->getRawOriginal('content'));
