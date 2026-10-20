@@ -12,7 +12,7 @@ beforeEach(function(): void {
     ReviewSettings::set('allow_reviews', 1);
 });
 
-function review(int $locationId, array $attributes = []): void
+function locationReview(int $locationId, array $attributes = []): void
 {
     static $id = 0;
     $id++;
@@ -34,9 +34,9 @@ function review(int $locationId, array $attributes = []): void
 }
 
 it('lists approved reviews newest first with rating averages', function(): void {
-    review($this->location->getKey(), ['author' => 'Ann Baker', 'review_text' => 'Newest']);
-    review($this->location->getKey(), ['author' => 'Cher', 'quality' => 3, 'delivery' => 0, 'service' => 5, 'review_text' => 'Older']);
-    review($this->location->getKey(), ['review_status' => 0, 'review_text' => 'Hidden']);
+    locationReview($this->location->getKey(), ['author' => 'Ann Baker', 'review_text' => 'Newest']);
+    locationReview($this->location->getKey(), ['author' => 'Cher', 'quality' => 3, 'delivery' => 0, 'service' => 5, 'review_text' => 'Older']);
+    locationReview($this->location->getKey(), ['review_status' => 0, 'review_text' => 'Hidden']);
 
     $this->getJson(route('igniter.theme.locations.reviews', ['slug' => 'soho']))
         ->assertOk()
@@ -52,7 +52,7 @@ it('lists approved reviews newest first with rating averages', function(): void 
 
 it('pages through the reviews', function(): void {
     foreach (range(1, 12) as $ignored) {
-        review($this->location->getKey());
+        locationReview($this->location->getKey());
     }
 
     $this->getJson(route('igniter.theme.locations.reviews', ['slug' => 'soho']))
