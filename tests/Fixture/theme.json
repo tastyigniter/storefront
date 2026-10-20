@@ -1,0 +1,7 @@
+{
+  "code": "storefront-fixture",
+  "name": "Storefront Fixture",
+  "description": "Tiny theme that hosts the storefront tests.",
+  "author": "Igniter Labs",
+  "meta-path": "/resources/meta"
+}

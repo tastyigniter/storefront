@@ -1,0 +1,8 @@
+.DS_Store
+.idea
+.phpunit.cache
+composer.lock
+coverage
+phpunit.xml
+/vendor
+node_modules/

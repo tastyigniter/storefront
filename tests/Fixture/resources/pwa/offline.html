@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>You're offline</title>
+    <style>
+        :root { color-scheme: dark; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            background: #2a1a30;
+            color: #fff;
+            font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+        }
+        main {
+            max-width: 28rem;
+            margin: 1.5rem;
+            padding: 2rem;
+            border: 1px solid rgb(255 255 255 / 0.15);
+            border-radius: 1.75rem;
+            background: rgb(18 13 22 / 0.72);
+            text-align: center;
+        }
+        h1 { margin: 0 0 0.5rem; font-size: 1.75rem; }
+        p { margin: 0 0 1.5rem; color: rgb(255 255 255 / 0.74); line-height: 1.55; }
+        a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 3rem;
+            padding: 0 1.4rem;
+            border-radius: 1rem;
+            background: #f4a261;
+            color: #2a1a30;
+            font-weight: 800;
+            text-decoration: none;
+        }
+        a:focus-visible { outline: 2px solid #f6d7c3; outline-offset: 2px; }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>You're offline</h1>
+        <p>The menu needs a connection. Check your network, then try again.</p>
+        <a href="/">Try again</a>
+    </main>
+</body>
+</html>

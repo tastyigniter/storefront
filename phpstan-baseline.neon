@@ -1,0 +1,517 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:allowGuestOrder\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Actions/PlaceOrder.php
+
+		-
+			message: '#^Parameter \#1 \$code of static method Igniter\\Local\\Facades\\Location\:\:updateOrderType\(\) expects void\|null, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Actions/SearchFulfillment.php
+
+		-
+			message: '#^Parameter \#1 \$code of static method Igniter\\Local\\Facades\\Location\:\:updateOrderType\(\) expects void\|null, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Actions/UpdateFulfilment.php
+
+		-
+			message: '#^Parameter \#1 \$dateTime of static method Igniter\\Local\\Facades\\Location\:\:updateScheduleTimeSlot\(\) expects void, Carbon\\Carbon given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Actions/UpdateFulfilment.php
+
+		-
+			message: '#^Parameter \#1 \$timestamp of static method Igniter\\Local\\Facades\\Location\:\:checkOrderTime\(\) expects void\|null, Carbon\\Carbon given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Actions/UpdateFulfilment.php
+
+		-
+			message: '#^Parameter \#2 \$isAsap of static method Igniter\\Local\\Facades\\Location\:\:updateScheduleTimeSlot\(\) expects void\|null, false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Actions/UpdateFulfilment.php
+
+		-
+			message: '#^Parameter \#2 \$isAsap of static method Igniter\\Local\\Facades\\Location\:\:updateScheduleTimeSlot\(\) expects void\|null, true given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Actions/UpdateFulfilment.php
+
+		-
+			message: '#^Parameter \#2 \$orderTypeCode of static method Igniter\\Local\\Facades\\Location\:\:checkOrderTime\(\) expects void\|null, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Actions/UpdateFulfilment.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:hasCollection\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Actions/UpdateSession.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:hasDelivery\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Actions/UpdateSession.php
+
+		-
+			message: '#^Parameter \#1 \$code of static method Igniter\\Local\\Facades\\Location\:\:updateOrderType\(\) expects void\|null, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Actions/UpdateSession.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Http/Controllers/Account/AddressController.php
+
+		-
+			message: '#^Relation ''location'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/Account/AddressController.php
+
+		-
+			message: '#^Relation ''menus'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/Account/AddressController.php
+
+		-
+			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/Account/AddressController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Http/Controllers/Account/OrderController.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\User\\Models\\Customer\:\:orders\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Http/Controllers/Account/OrderController.php
+
+		-
+			message: '#^Relation ''location'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: src/Http/Controllers/Account/OrderController.php
+
+		-
+			message: '#^Relation ''menus'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: src/Http/Controllers/Account/OrderController.php
+
+		-
+			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: src/Http/Controllers/Account/OrderController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Http/Controllers/Account/ReservationController.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\User\\Models\\Customer\:\:reservations\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Http/Controllers/Account/ReservationController.php
+
+		-
+			message: '#^Relation ''location'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/Account/ReservationController.php
+
+		-
+			message: '#^Relation ''location'' is not found in Igniter\\Reservation\\Models\\Reservation model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/Account/ReservationController.php
+
+		-
+			message: '#^Relation ''menus'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/Account/ReservationController.php
+
+		-
+			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/Account/ReservationController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Http/Controllers/BookingController.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:getMinReservationGuestCount\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Http/Controllers/BookingController.php
+
+		-
+			message: '#^Relation ''location'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/BookingController.php
+
+		-
+			message: '#^Relation ''location'' is not found in Igniter\\Reservation\\Models\\Reservation model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/BookingController.php
+
+		-
+			message: '#^Relation ''menus'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/BookingController.php
+
+		-
+			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/BookingController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Http/Controllers/CheckoutController.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:allowGuestOrder\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Http/Controllers/CheckoutController.php
+
+		-
+			message: '#^Relation ''location'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: src/Http/Controllers/CheckoutController.php
+
+		-
+			message: '#^Relation ''menus'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: src/Http/Controllers/CheckoutController.php
+
+		-
+			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 2
+			path: src/Http/Controllers/CheckoutController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Http/Controllers/HomeController.php
+
+		-
+			message: '#^Relation ''location'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/HomeController.php
+
+		-
+			message: '#^Relation ''menus'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/HomeController.php
+
+		-
+			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/HomeController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Http/Controllers/MenuController.php
+
+		-
+			message: '#^Relation ''location'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/MenuController.php
+
+		-
+			message: '#^Relation ''menus'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/MenuController.php
+
+		-
+			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/MenuController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$content\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Http/Controllers/PageController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$meta_description\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Http/Controllers/PageController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$title\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Http/Controllers/PageController.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Http/Controllers/VendorController.php
+
+		-
+			message: '#^Relation ''location'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/VendorController.php
+
+		-
+			message: '#^Relation ''menus'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/VendorController.php
+
+		-
+			message: '#^Relation ''totals'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Http/Controllers/VendorController.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:getMaxReservationAdvanceTime\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Http/Requests/PlaceReservationRequest.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:getMaxReservationGuestCount\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Http/Requests/PlaceReservationRequest.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:getMinReservationAdvanceTime\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Http/Requests/PlaceReservationRequest.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:getMinReservationGuestCount\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Http/Requests/PlaceReservationRequest.php
+
+		-
+			message: '#^Result of static method Igniter\\Local\\Facades\\Location\:\:hasLaterSchedule\(\) \(void\) is used\.$#'
+			identifier: staticMethod.void
+			count: 1
+			path: src/Support/CheckoutStatus.php
+
+		-
+			message: '#^Access to an undefined property Igniter\\Local\\Classes\\CoveredArea\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Support/DeliveryCoverage.php
+
+		-
+			message: '#^Access to an undefined property Igniter\\Local\\Models\\Location\:\:\$delivery_areas\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Support/DeliveryCoverage.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:hasCollection\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Support/DeliveryCoverage.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Support/DineInTables.php
+
+		-
+			message: '#^Access to an undefined property Igniter\\Local\\Models\\Location\:\:\$working_hours\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Support/Hours.php
+
+		-
+			message: '#^Relation ''working_hours'' is not found in Igniter\\Local\\Models\\Location model\.$#'
+			identifier: larastan.relationExistence
+			count: 1
+			path: src/Support/Hours.php
+
+		-
+			message: '#^Access to an undefined property Igniter\\Cart\\Models\\Menu\:\:\$categories\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Support/MenuCatalog.php
+
+		-
+			message: '#^Access to an undefined property Igniter\\Cart\\Models\\Menu\:\:\$mealtimes\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Support/MenuCatalog.php
+
+		-
+			message: '#^Access to an undefined property Igniter\\Cart\\Models\\MenuOptionValue\:\:\$ingredients\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Support/MenuCatalog.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Flame\\Database\\Builder\:\:listFrontEnd\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: src/Support/MenuCatalog.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:getMaxReservationAdvanceTime\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Support/Schedules.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:getMaxReservationGuestCount\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Support/Schedules.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:getMinReservationAdvanceTime\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Support/Schedules.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:getMinReservationGuestCount\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Support/Schedules.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:listAvailablePayments\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Support/Schedules.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:shouldAddLeadTime\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Support/Schedules.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<\*NEVER\*,\*NEVER\*\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: src/Support/Schedules.php
+
+		-
+			message: '#^Parameter \#1 \$code of static method Igniter\\Local\\Facades\\Location\:\:getOrderType\(\) expects void\|null, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Support/Schedules.php
+
+		-
+			message: '#^Result of static method Igniter\\Local\\Facades\\Location\:\:getActiveOrderTypes\(\) \(void\) is used\.$#'
+			identifier: staticMethod.void
+			count: 1
+			path: src/Support/Schedules.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$address_1\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Support/StorefrontState.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$address_2\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Support/StorefrontState.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$city\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Support/StorefrontState.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$country_id\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Support/StorefrontState.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$postcode\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Support/StorefrontState.php
+
+		-
+			message: '#^Access to an undefined property Illuminate\\Database\\Eloquent\\Model\:\:\$state\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Support/StorefrontState.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:allowGuestOrder\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Support/StorefrontState.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:hasCollection\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Support/StorefrontState.php
+
+		-
+			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:hasDelivery\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/Support/StorefrontState.php
+
+		-
+			message: '#^Static method Igniter\\Flame\\Database\\Builder\:\:get\(\) invoked with 2 parameters, 0\-1 required\.$#'
+			identifier: arguments.count
+			count: 1
+			path: src/Support/StorefrontState.php
