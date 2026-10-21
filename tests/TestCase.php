@@ -17,7 +17,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\File;
 use Inertia\ServiceProvider as InertiaServiceProvider;
 use Override;
-use PDO;
 use Throwable;
 
 abstract class TestCase extends \SamPoyigi\Testbench\TestCase
