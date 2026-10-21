@@ -94,11 +94,11 @@ it('sends a contact message', function(): void {
             'full_name' => 'Jane Doe',
             'email' => 'jane@example.test',
             'telephone' => '07700900000',
-            'subject' => 'Comment',
+            'subject' => 'contact.subject_comment',
             'comment' => 'Loved it',
         ])
         ->assertRedirect(route('igniter.theme.contact'))
-        ->assertSessionHas('success', 'Thanks, your message is on its way.');
+        ->assertSessionHas('success', 'alert.contact_sent');
 });
 
 it('reports a contact message that cannot be sent', function(): void {
@@ -109,9 +109,9 @@ it('reports a contact message that cannot be sent', function(): void {
             'full_name' => 'Jane Doe',
             'email' => 'jane@example.test',
             'telephone' => '07700900000',
-            'subject' => 'Comment',
+            'subject' => 'contact.subject_comment',
         ])
-        ->assertSessionHasErrors(['form' => 'Something went wrong. Please try again.']);
+        ->assertSessionHasErrors(['form' => 'alert.something_wrong']);
 });
 
 it('checks reCAPTCHA on the contact form when it is set up', function(): void {
@@ -121,7 +121,7 @@ it('checks reCAPTCHA on the contact form when it is set up', function(): void {
         'full_name' => 'Jane Doe',
         'email' => 'jane@example.test',
         'telephone' => '07700900000',
-        'subject' => 'Comment',
+        'subject' => 'contact.subject_comment',
     ])->assertSessionHasErrors('g-recaptcha-response');
 });
 

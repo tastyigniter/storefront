@@ -71,6 +71,8 @@ class ThemeContent
                 'menuImages' => (bool)self::value('show_menu_images', true),
                 'categoryImages' => (bool)self::value('show_category_images', true),
             ],
+            // Customize > General: suggest addresses as the customer types.
+            'addressSuggestions' => (bool)self::value('address_suggestions', true),
         ];
 
         return self::read($site, $key, $default);
@@ -165,7 +167,22 @@ class ThemeContent
             'title' => self::menuTitle((string)$item->title),
             'url' => self::relativeUrl($item->url ?: null),
             'items' => self::mapMenuItems((array)$item->items),
-        ])->values()->all();
+        ])->reject(fn(array $item): bool => self::isLocationsPage($item['url']))->values()->all();
+    }
+
+    /**
+     * Single location mode drops the locations directory from every menu.
+     */
+    protected static function isLocationsPage(?string $url): bool
+    {
+        if (!self::singleLocation() || $url === null || $url === '') {
+            return false;
+        }
+
+        $path = rtrim((string)(parse_url($url, PHP_URL_PATH) ?: $url), '/') ?: '/';
+        $locations = rtrim((string)(parse_url(StorefrontRoutes::url('igniter.theme.locations'), PHP_URL_PATH) ?: '/locations'), '/') ?: '/locations';
+
+        return $path === $locations;
     }
 
     /**
@@ -228,7 +245,30 @@ class ThemeContent
             'featured' => $location instanceof LocationModel && $featuredIds
                 ? MenuCatalog::featured($location, $orderType, $featuredIds, max(1, (int)self::value('featured_limit', 6)))
                 : [],
+            'orderButton' => self::orderButton(),
         ];
+    }
+
+    /**
+     * The default location's menu, when the homepage search is replaced by a button.
+     */
+    public static function orderButton(): ?string
+    {
+        if (!(bool)self::value('home_order_button', false)) {
+            return null;
+        }
+
+        $default = LocationModel::getDefault();
+        if ($default instanceof LocationModel && (string)$default->permalink_slug !== '') {
+            return route('igniter.theme.order', ['location' => $default->permalink_slug], false);
+        }
+
+        return route('igniter.theme.order.current', absolute: false);
+    }
+
+    public static function singleLocation(): bool
+    {
+        return (bool)self::value('single_location', false);
     }
 
     protected static function slides(string $code): array

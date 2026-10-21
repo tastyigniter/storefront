@@ -72,8 +72,8 @@ it('refuses a review for an order it cannot find', function(): void {
 it('validates the review', function(): void {
     $this->post(route('igniter.theme.review.store', ['type' => 'order', 'hash' => 'any']), [])
         ->assertSessionHasErrors([
-            'comment' => 'Please tell us a little about your experience.',
-            'quality' => 'Please rate the food quality.',
-            'service' => 'Please rate the service.',
+            'comment' => 'alert.review_comment',
+            'quality' => 'alert.rate_quality',
+            'service' => 'alert.rate_service',
         ]);
 });

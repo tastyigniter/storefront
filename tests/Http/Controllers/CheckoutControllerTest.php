@@ -91,7 +91,7 @@ it('sends customers home when there is no location', function(): void {
 
     $this->get(route('igniter.theme.checkout.checkout'))
         ->assertRedirect(route('igniter.theme.home'))
-        ->assertSessionHas('error', 'Choose a location before checkout.');
+        ->assertSessionHas('error', 'alert.choose_location_checkout');
 });
 
 it('shows the receipt when the session order is already paid', function(): void {
@@ -126,7 +126,7 @@ it('saves the payment on an order with nothing to pay yet', function(): void {
 it('rejects an unknown payment method', function(): void {
     $this->postJson(route('igniter.theme.checkout.payment'), ['payment' => 'nope'])
         ->assertStatus(422)
-        ->assertJsonPath('message', 'That payment method is not available.');
+        ->assertJsonPath('message', 'alert.payment_not_available');
 });
 
 it('reports a payment method that fails to load', function(): void {
@@ -134,7 +134,7 @@ it('reports a payment method that fails to load', function(): void {
 
     $this->postJson(route('igniter.theme.checkout.payment'), ['payment' => 'cod'])
         ->assertStatus(422)
-        ->assertJsonPath('message', 'This payment method could not be loaded. Try another one.');
+        ->assertJsonPath('message', 'alert.payment_not_loaded');
 });
 
 it('will not delete a saved card that does not exist', function(): void {
@@ -142,7 +142,7 @@ it('will not delete a saved card that does not exist', function(): void {
 
     $this->postJson(route('igniter.theme.checkout.payment-profile.delete'), ['payment' => 'cod'])
         ->assertStatus(422)
-        ->assertJsonPath('message', 'That saved card could not be found.');
+        ->assertJsonPath('message', 'alert.saved_card_missing');
 });
 
 it('deletes a saved card', function(): void {
@@ -167,7 +167,7 @@ it('reports a saved card that cannot be deleted', function(): void {
 
     $this->postJson(route('igniter.theme.checkout.payment-profile.delete'), ['payment' => 'cod'])
         ->assertStatus(422)
-        ->assertJsonPath('message', 'The saved card could not be removed. Please try again.');
+        ->assertJsonPath('message', 'alert.saved_card_not_removed');
 });
 
 it('prepares the order before a card is charged', function(): void {
@@ -187,7 +187,7 @@ it('does not prepare an order for a guest when guest orders are off', function()
 
     $this->postJson(route('igniter.theme.checkout.prepare'), checkoutDetails())
         ->assertForbidden()
-        ->assertJsonPath('message', 'Sign in to place your order.');
+        ->assertJsonPath('message', 'alert.sign_in_to_order');
 });
 
 it('explains why an order cannot be prepared', function(): void {
@@ -202,7 +202,7 @@ it('hides unexpected errors while preparing an order', function(): void {
 
     $this->postJson(route('igniter.theme.checkout.prepare'), checkoutDetails())
         ->assertStatus(422)
-        ->assertJsonPath('message', 'Something went wrong. Please try again.');
+        ->assertJsonPath('message', 'alert.something_wrong');
 });
 
 it('validates the checkout form', function(): void {
@@ -245,7 +245,7 @@ it('asks for a delivery address on delivery orders', function(): void {
 
     $this->from(route('igniter.theme.checkout.checkout'))
         ->post(route('igniter.theme.checkout.store'), checkoutDetails())
-        ->assertSessionHasErrors(['form' => 'Add your delivery address in the order details to continue.']);
+        ->assertSessionHasErrors(['form' => 'alert.add_delivery_address']);
 });
 
 it('uses the delivery address from the order details', function(): void {
@@ -274,7 +274,7 @@ it('shows the order receipt', function(): void {
             ->component('Checkout/Success')
             ->where('order.hash', $order->hash)
             ->where('order.location', $this->location->location_name)
-            ->where('meta.title', 'Order #'.$order->getKey().' confirmed - '.setting('site_name', 'Restaurant'))
+            ->where('meta.title', 'meta.order_confirmed - site.name')
             ->missing('review'));
 });
 

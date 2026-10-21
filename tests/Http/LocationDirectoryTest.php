@@ -41,15 +41,15 @@ it('sorts nearest first in miles, with unmapped locations last', function(): voi
     $locations = LocationDirectory::locations(null, '', null, ['lat' => 51.5074, 'lng' => -0.1278]);
 
     expect(names($locations))->toBe(['Soho Kitchen', 'Leeds Diner', 'Ghost Kitchen'])
-        ->and($locations[0]['distanceLabel'])->toBe('0.6 mi away')
-        ->and($locations[1]['distanceLabel'])->toEndWith('mi away')
+        ->and($locations[0]['distanceLabel'])->toBe('locations.distance_mi')
+        ->and($locations[1]['distanceLabel'])->toBe('locations.distance_mi')
         ->and($locations[2]['distanceLabel'])->toBeNull();
 });
 
 it('shows distances in kilometres when the site uses them', function(): void {
     Settings::set('distance_unit', 'km');
 
-    expect(LocationDirectory::locations(null, 'leeds', null, ['lat' => 51.5074, 'lng' => -0.1278])[0]['distanceLabel'])->toBe('272 km away');
+    expect(LocationDirectory::locations(null, 'leeds', null, ['lat' => 51.5074, 'lng' => -0.1278])[0]['distanceLabel'])->toBe('locations.distance_km');
 });
 
 it('measures from the shared point or the searched address', function(): void {
@@ -79,6 +79,12 @@ it('asks for a position when sorting nearest first without one', function(): voi
 it('validates the filters', function(): void {
     $this->get(route('igniter.theme.locations', ['type' => 'drone', 'sort' => 'price', 'lat' => 95]))
         ->assertSessionHasErrors(['type', 'sort', 'lat', 'lng']);
+});
+
+it('refuses the locations page in single location mode', function(): void {
+    setThemeSettings(['single_location' => true]);
+
+    $this->get(route('igniter.theme.locations'))->assertNotFound();
 });
 
 it('pages the directory and keeps the filters', function(): void {

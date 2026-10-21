@@ -41,7 +41,7 @@ it('registers a customer who is active straight away', function(): void {
 
     $this->post(route('igniter.theme.account.register'), registration())
         ->assertRedirect(route('igniter.theme.account.account'))
-        ->assertSessionHas('success', 'Welcome. Your account is ready.');
+        ->assertSessionHas('success', 'alert.welcome');
 
     $customer = Customer::query()->whereEmail('jane@example.test')->first();
     expect($customer)->not->toBeNull()
@@ -54,7 +54,7 @@ it('asks the customer to activate when the group needs approval', function(): vo
 
     $this->post(route('igniter.theme.account.register'), registration())
         ->assertRedirect(route('igniter.theme.account.login'))
-        ->assertSessionHas('success', 'Check your email to activate your account.');
+        ->assertSessionHas('success', 'alert.check_email');
 
     $customer = Customer::query()->whereEmail('jane@example.test')->first();
     expect((bool)$customer->is_activated)->toBeFalse()
@@ -87,7 +87,7 @@ it('activates an account from the emailed link', function(): void {
 
     $this->get(route('igniter.theme.account.register', ['code' => $code]))
         ->assertRedirect(route('igniter.theme.account.account'))
-        ->assertSessionHas('success', 'Your account is ready.');
+        ->assertSessionHas('success', 'alert.account_ready');
 
     expect($customer->fresh()->is_activated)->toBeTrue();
 });

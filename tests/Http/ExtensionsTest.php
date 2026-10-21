@@ -34,12 +34,12 @@ it('rejects dine-in from the header when the location does not offer it', functi
 
     $this->from(route('igniter.theme.order'))
         ->post(route('igniter.theme.session'), ['location_id' => $location->getKey(), 'order_type' => 'dinein'])
-        ->assertSessionHasErrors(['form' => 'This location does not offer dine-in.']);
+        ->assertSessionHasErrors(['form' => 'alert.no_dinein']);
 });
 
 it('lists dining areas and remembers the chosen table', function(): void {
     expect(fn(): bool => DineInTables::remember(1, 1, 1))
-        ->toThrow(ApplicationException::class, 'This location does not offer dine-in.');
+        ->toThrow(ApplicationException::class, 'alert.no_dinein');
 
     $location = currentLocation();
     $area = DiningArea::factory()->create(['location_id' => $location->getKey(), 'name' => 'Patio']);
@@ -80,7 +80,7 @@ it('lists dining areas and remembers the chosen table', function(): void {
         ->and(DineInTables::present($location)['tableId'])->toBe((int)$table->getKey());
 
     expect(fn(): bool => DineInTables::remember((int)$location->getKey(), (int)$area->getKey(), 999))
-        ->toThrow(ApplicationException::class, 'Choose a table for your dine-in order.');
+        ->toThrow(ApplicationException::class, 'alert.table_required');
 
     $solo = LocationModel::factory()->create();
     $only = DiningArea::factory()->create(['location_id' => $solo->getKey(), 'name' => 'Only']);
@@ -114,7 +114,7 @@ it('sends social sign-in to the confirm-email step', function(): void {
 
     $this->from(route('igniter.theme.account.login'))
         ->post(route('igniter.theme.account.confirm.store'), ['email' => 'new@example.test'])
-        ->assertSessionHasErrors(['form' => 'Sign in with the provider again so we can confirm your email.']);
+        ->assertSessionHasErrors(['form' => 'alert.socialite_missing']);
 
     $this->get(route('igniter.theme.account.login'))
         ->assertInertia(fn(AssertableInertia $page): AssertableInertia => $page->where('providers', []));
@@ -217,27 +217,27 @@ it('redeems points and shows the history when loyalty is available', function():
 
     $this->from(route('igniter.theme.order'))
         ->post(route('igniter.theme.cart.loyalty'), ['amount' => 2])
-        ->assertSessionHasErrors(['form' => 'Redeem at least 5 points.']);
+        ->assertSessionHasErrors(['form' => 'alert.loyalty_minimum']);
 
     LoyaltyRedeem::$state['signedIn'] = false;
 
     $this->from(route('igniter.theme.order'))
         ->post(route('igniter.theme.cart.loyalty'), ['amount' => 10])
-        ->assertSessionHasErrors(['form' => 'Sign in to redeem points.']);
+        ->assertSessionHasErrors(['form' => 'alert.loyalty_login']);
 
     LoyaltyRedeem::$state['signedIn'] = true;
     LoyaltyRedeem::$state['cartEmpty'] = true;
 
     $this->from(route('igniter.theme.order'))
         ->post(route('igniter.theme.cart.loyalty'), ['amount' => 10])
-        ->assertSessionHasErrors(['form' => 'Add something to your basket before redeeming points.']);
+        ->assertSessionHasErrors(['form' => 'alert.loyalty_empty']);
 
     LoyaltyRedeem::$state['cartEmpty'] = false;
     LoyaltyRedeem::$state['available'] = 4;
 
     $this->from(route('igniter.theme.order'))
         ->post(route('igniter.theme.cart.loyalty'), ['amount' => 10])
-        ->assertSessionHasErrors(['form' => 'You do not have that many points.']);
+        ->assertSessionHasErrors(['form' => 'alert.loyalty_points']);
 
     LoyaltyRedeem::$state['available'] = 20;
     LoyaltyRedeem::$state['applied'] = 10;
@@ -274,7 +274,7 @@ it('rejects a loyalty amount of zero through the guard', function(): void {
         'canApply' => true,
         'cartEmpty' => false,
         'signedIn' => true,
-    ])))->toThrow(ApplicationException::class, 'Enter a valid number of points.');
+    ])))->toThrow(ApplicationException::class, 'alert.loyalty_amount');
 });
 
 it('shows the gift card purchase page when gift cards are connected', function(): void {

@@ -9,6 +9,7 @@ use Igniter\Storefront\Http\Concerns\ResolvesStorefrontPage;
 use Igniter\Storefront\Support\LocationDirectory;
 use Igniter\Storefront\Support\Pagination;
 use Igniter\Storefront\Support\Reviews;
+use Igniter\Storefront\Support\ThemeContent;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -20,6 +21,8 @@ class LocationController
 
     public function index(Request $request): Response
     {
+        abort_if(ThemeContent::singleLocation(), 404);
+
         $data = $request->validate([
             'search' => ['nullable', 'string', 'max:120'],
             'type' => ['nullable', 'in:'.implode(',', array_keys(LocationDirectory::ORDER_TYPES))],

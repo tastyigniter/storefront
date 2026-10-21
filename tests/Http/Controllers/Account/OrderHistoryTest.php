@@ -68,7 +68,7 @@ it('shows an order with its options and totals', function(): void {
             ->where('order.totals.0.title', 'Sub Total')
             ->where('order.totals.1.title', 'Tip')
             ->where('order.totals.2.title', 'Order Total')
-            ->where('meta.title', 'Order #'.$order->getKey().' - '.setting('site_name', 'Restaurant'))
+            ->where('meta.title', 'meta.order_number - site.name')
             ->where('order.canReorder', true)
             ->where('order.canCancel', false));
 });
@@ -187,7 +187,7 @@ it('shows a reservation', function(): void {
         ->assertInertia(fn(AssertableInertia $page): AssertableInertia => $page
             ->component('Account/Reservation')
             ->where('reservation.telephone', '0123')
-            ->where('meta.title', 'Reservation #'.$reservation->getKey().' - '.setting('site_name', 'Restaurant'))
+            ->where('meta.title', 'meta.reservation_number - site.name')
             ->where('reservation.location', $this->location->location_name));
 });
 

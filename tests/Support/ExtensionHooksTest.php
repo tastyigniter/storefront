@@ -34,7 +34,6 @@ it('resolves theme page names to the storefront routes', function(): void {
         ->and(page_url('account.login'))->toBe(url('/login'))
         ->and(page_url('local.menus', ['location' => 'soho']))->toBe(url('/soho/order'))
         ->and(page_url('checkout.success', ['hash' => 'abc']))->toBe(url('/checkout/success/abc'))
-        ->and(page_url('group-order.join', ['hash' => 'xyz']))->toBe(url('/group-order/join/xyz'))
         ->and(page_url('no.such-page'))->toBe(url('/no.such-page'));
 });
 

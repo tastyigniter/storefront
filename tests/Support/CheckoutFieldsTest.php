@@ -29,7 +29,7 @@ it('builds the default checkout fields', function(): void {
 
     expect($fields->keys()->all())->toBe(['first_name', 'last_name', 'email', 'telephone', 'comment', 'delivery_comment', 'termsAgreed'])
         ->and($fields['termsAgreed'])->toMatchArray(['required' => true, 'termsUrl' => '/terms-and-conditions', 'tab' => 'terms'])
-        ->and($fields['comment']['placeholder'])->toBe('Allergies, special requests, sauce on the side…')
+        ->and($fields['comment']['placeholder'])->toBe('checkout.comment_placeholder')
         ->and($fields['email']['attributes'])->toBe(['autocomplete' => 'email']);
 });
 

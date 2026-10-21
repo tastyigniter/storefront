@@ -28,8 +28,8 @@ it('uses the theme name when the restaurant has none', function(): void {
 
     $this->get(route('igniter.theme.webmanifest'))
         ->assertOk()
-        ->assertJsonPath('name', 'Restaurant')
-        ->assertJsonPath('short_name', 'Restaurant');
+        ->assertJsonPath('name', 'site.name')
+        ->assertJsonPath('short_name', 'site.name');
 });
 
 it('shortens a long restaurant name for the home screen', function(): void {

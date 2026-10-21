@@ -12,6 +12,7 @@ use Igniter\Storefront\Http\Requests\SearchFulfillmentRequest;
 use Igniter\Storefront\Http\Requests\UpdateFulfilmentRequest;
 use Igniter\Storefront\Http\Requests\UpdateSessionRequest;
 use Igniter\Storefront\Storefront;
+use Igniter\Storefront\Support\AddressSuggestions;
 use Igniter\Storefront\Support\DeliveryCoverage;
 use Igniter\Storefront\Support\GeoPin;
 use Igniter\Storefront\Support\StorefrontRoutes;
@@ -92,6 +93,33 @@ class FulfillmentController
             'latitude' => (float)$data['latitude'],
             'longitude' => (float)$data['longitude'],
         ]);
+    }
+
+    /**
+     * Addresses matching what the customer has typed so far.
+     */
+    public function suggestions(Request $request): JsonResponse
+    {
+        $data = $request->validate(['query' => ['nullable', 'string', 'max:255']]);
+
+        return response()->json([
+            'suggestions' => AddressSuggestions::search((string)($data['query'] ?? '')),
+        ]);
+    }
+
+    /**
+     * Coordinates for a picked suggestion that came without them.
+     */
+    public function place(Request $request): JsonResponse
+    {
+        $data = $request->validate(['placeId' => ['required', 'string', 'max:500']]);
+
+        $coordinates = AddressSuggestions::coordinates($data['placeId']);
+        if ($coordinates === null) {
+            return response()->json(['message' => Storefront::lang('alert.address_not_found_check')], 422);
+        }
+
+        return response()->json($coordinates);
     }
 
     public function session(UpdateSessionRequest $request, Fulfilment $action): mixed

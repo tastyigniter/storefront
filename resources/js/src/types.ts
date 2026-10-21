@@ -218,6 +218,8 @@ export interface SiteShared {
     pwaIcon: string | null;
     /** Customize > General image switches. */
     display: { menuImages: boolean; categoryImages: boolean };
+    /** Customize > General: suggest addresses while the customer types. */
+    addressSuggestions: boolean;
 }
 
 export interface HomeContent {
@@ -235,6 +237,8 @@ export interface HomeContent {
     }>;
     featuredTitle: string;
     featured: MenuItem[];
+    /** Default location menu, when the homepage search is replaced by a button. */
+    orderButton?: string | null;
 }
 
 export interface CheckoutField {

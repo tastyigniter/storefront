@@ -28,29 +28,29 @@ it('uses the site name and description on the homepage', function(): void {
 
 it('titles storefront pages with the site name', function(): void {
     expect(PageMeta::forRoute('igniter.theme.order'))->toBe([
-        'title' => 'Menu - Glass Kitchen',
-        'description' => 'Browse the menu and order online from Soho for delivery or collection.',
+        'title' => 'meta.order_title'.' - Glass Kitchen',
+        'description' => 'meta.order_description',
     ])
-        ->and(PageMeta::forRoute('igniter.theme.booking')['description'])->toBe('Reserve a table at Soho. Pick a date, time and party size.')
-        ->and(PageMeta::forRoute('igniter.theme.account.address')['title'])->toBe('Your addresses - Glass Kitchen');
+        ->and(PageMeta::forRoute('igniter.theme.booking')['description'])->toBe('meta.booking_description')
+        ->and(PageMeta::forRoute('igniter.theme.account.address')['title'])->toBe('meta.account_address_title'.' - Glass Kitchen');
 });
 
 it('has a title for every storefront page', function(string $route, string $title): void {
     expect(PageMeta::forRoute('igniter.theme.'.$route)['title'])->toBe($title.' - Glass Kitchen');
 })->with([
-    ['checkout.checkout', 'Checkout'],
-    ['checkout.success', 'Order confirmed'],
-    ['booking.success', 'Booking confirmed'],
-    ['contact', 'Contact us'],
-    ['account.login', 'Sign in'],
-    ['account.register', 'Create an account'],
-    ['account.forgot', 'Forgot password'],
-    ['account.reset', 'Reset password'],
-    ['account.account', 'Your account'],
-    ['account.orders', 'Your orders'],
-    ['account.order', 'Order details'],
-    ['account.reservations', 'Your reservations'],
-    ['account.reservation', 'Reservation details'],
+    ['checkout.checkout', 'meta.checkout_checkout_title'],
+    ['checkout.success', 'meta.checkout_success_title'],
+    ['booking.success', 'meta.booking_success_title'],
+    ['contact', 'meta.contact_title'],
+    ['account.login', 'meta.account_login_title'],
+    ['account.register', 'meta.account_register_title'],
+    ['account.forgot', 'meta.account_forgot_title'],
+    ['account.reset', 'meta.account_reset_title'],
+    ['account.account', 'meta.account_account_title'],
+    ['account.orders', 'meta.account_orders_title'],
+    ['account.order', 'meta.account_order_title'],
+    ['account.reservations', 'meta.account_reservations_title'],
+    ['account.reservation', 'meta.account_reservation_title'],
 ]);
 
 it('falls back to the site details for unknown routes and without a location', function(): void {
@@ -59,13 +59,13 @@ it('falls back to the site details for unknown routes and without a location', f
     (fn(): null => $this->model = null)->call(resolve('location'));
 
     expect(PageMeta::forRoute(null))->toBe(['title' => 'Glass Kitchen', 'description' => PageMeta::siteDescription()])
-        ->and(PageMeta::forRoute('igniter.theme.contact')['description'])->toBe('Questions, feedback or a special request? Get in touch at Glass Kitchen.');
+        ->and(PageMeta::forRoute('igniter.theme.contact')['description'])->toBe('meta.contact_description');
 });
 
 it('uses the default description when the theme has none', function(): void {
     setThemeSettings(['meta_description' => '']);
 
-    expect(PageMeta::siteDescription())->toBe('Order online for delivery or collection, or book a table.');
+    expect(PageMeta::siteDescription())->toBe('meta.default_description');
 });
 
 it('keeps descriptions short and does not repeat the site name', function(): void {
@@ -78,9 +78,9 @@ it('keeps descriptions short and does not repeat the site name', function(): voi
 it('prints the title and description in the page head', function(): void {
     $this->get(route('igniter.theme.contact'))
         ->assertOk()
-        ->assertSee('<title>Contact us - Glass Kitchen</title>', false)
-        ->assertSee('<meta name="description" content="Questions, feedback or a special request? Get in touch at Soho." data-inertia="description">', false)
-        ->assertInertia(fn(AssertableInertia $page): AssertableInertia => $page->where('meta.title', 'Contact us - Glass Kitchen'));
+        ->assertSee('<title>'.'meta.contact_title'.' - Glass Kitchen</title>', false)
+        ->assertSee('<meta name="description" content="'.'meta.contact_description'.'" data-inertia="description">', false)
+        ->assertInertia(fn(AssertableInertia $page): AssertableInertia => $page->where('meta.title', 'meta.contact_title'.' - Glass Kitchen'));
 });
 
 it('titles booking confirmations with the booking number', function(): void {
@@ -88,7 +88,7 @@ it('titles booking confirmations with the booking number', function(): void {
 
     $this->get(route('igniter.theme.booking.success', ['hash' => $reservation->hash]))
         ->assertInertia(fn(AssertableInertia $page): AssertableInertia => $page
-            ->where('meta.title', 'Booking #'.$reservation->getKey().' confirmed - Glass Kitchen'));
+            ->where('meta.title', 'meta.booking_confirmed'.' - Glass Kitchen'));
 });
 
 it('describes static pages from their meta description or content', function(): void {

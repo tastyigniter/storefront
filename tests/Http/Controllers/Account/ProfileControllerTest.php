@@ -28,7 +28,7 @@ it('updates the customer details', function(): void {
             'last_name' => 'Lovelace',
         ])
         ->assertRedirect(route('igniter.theme.account.account'))
-        ->assertSessionHas('success', 'Your details have been saved.');
+        ->assertSessionHas('success', 'alert.profile_saved');
 
     $customer->refresh();
     expect($customer->first_name)->toBe('Ada')
@@ -59,7 +59,7 @@ it('deletes the account, its addresses and saved cards', function(): void {
 
     $this->delete(route('igniter.theme.account.delete'), ['password' => 'password'])
         ->assertRedirect(route('igniter.theme.home'))
-        ->assertSessionHas('success', 'Your account has been deleted.');
+        ->assertSessionHas('success', 'alert.account_deleted');
 
     expect(Customer::find($customer->getKey()))->toBeNull()
         ->and(Address::find($address->getKey()))->toBeNull()

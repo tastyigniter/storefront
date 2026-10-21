@@ -60,7 +60,7 @@ it("rejects a saved address that is not the customer's", function(): void {
 
     $this->from('/')
         ->post(route('igniter.theme.fulfillment'), ['address_id' => 999999])
-        ->assertSessionHasErrors(['form' => 'That saved address could not be found.']);
+        ->assertSessionHasErrors(['form' => 'alert.saved_address_missing']);
 });
 
 it('searches from a dropped map pin', function(): void {
@@ -79,7 +79,7 @@ it('explains a map pin it cannot place', function(): void {
 
     $this->from('/')
         ->post(route('igniter.theme.fulfillment'), ['latitude' => 51.5, 'longitude' => -0.1])
-        ->assertSessionHasErrors(['form' => "We couldn't work out an address for that spot. Move the pin or type your address."]);
+        ->assertSessionHasErrors(['form' => 'alert.pin_address_failed']);
 });
 
 it('says when no kitchen delivers to the address and coverage is required', function(): void {
@@ -89,7 +89,7 @@ it('says when no kitchen delivers to the address and coverage is required', func
 
     $this->from('/')
         ->post(route('igniter.theme.fulfillment'), ['address' => 'New York'])
-        ->assertSessionHasErrors(['form' => 'Sorry, we do not deliver to that address yet.']);
+        ->assertSessionHasErrors(['form' => 'alert.no_delivery_yet']);
 });
 
 it('says when the address cannot be found and coverage is required', function(): void {
@@ -98,7 +98,7 @@ it('says when the address cannot be found and coverage is required', function():
 
     $this->from('/')
         ->post(route('igniter.theme.fulfillment'), ['address' => 'Nowhere'])
-        ->assertSessionHasErrors(['form' => 'We could not find that address. Check it and try again.']);
+        ->assertSessionHasErrors(['form' => 'alert.address_not_found_check']);
 });
 
 it('keeps the current kitchen and explains it does not deliver there', function(): void {
@@ -107,7 +107,7 @@ it('keeps the current kitchen and explains it does not deliver there', function(
 
     $this->post(route('igniter.theme.fulfillment'), ['address' => 'New York'])
         ->assertRedirect(route('igniter.theme.order'))
-        ->assertSessionHas('error', 'Sorry, '.$this->location->location_name." doesn't deliver to your address yet. You can still order for collection.");
+        ->assertSessionHas('error', 'alert.coverage_outside'.'alert.coverage_collection');
 });
 
 it('needs an address, saved address or pin', function(): void {
@@ -146,13 +146,13 @@ it('rejects a time the kitchen is closed', function(): void {
             'date' => now()->subDays(2)->toDateString(),
             'time' => '10:00',
         ])
-        ->assertSessionHasErrors(['form' => 'That time is no longer available. Pick another time.']);
+        ->assertSessionHasErrors(['form' => 'alert.time_unavailable']);
 });
 
 it('rejects an order type the kitchen does not offer', function(): void {
     $this->from(route('igniter.theme.order'))
         ->put(route('igniter.theme.fulfillment.update'), ['order_type' => 'drone', 'asap' => true])
-        ->assertSessionHasErrors(['form' => 'That order type is not available at '.$this->location->location_name.'.']);
+        ->assertSessionHasErrors(['form' => 'alert.order_type_unavailable']);
 });
 
 it('rejects ASAP when only scheduled orders are taken', function(): void {
@@ -160,7 +160,7 @@ it('rejects ASAP when only scheduled orders are taken', function(): void {
 
     $this->from(route('igniter.theme.order'))
         ->put(route('igniter.theme.fulfillment.update'), ['order_type' => 'collection', 'asap' => true])
-        ->assertSessionHasErrors(['form' => 'ASAP orders are not available right now. Schedule your order instead.']);
+        ->assertSessionHasErrors(['form' => 'alert.asap_unavailable']);
 });
 
 it('asks for a location first', function(): void {
@@ -170,7 +170,7 @@ it('asks for a location first', function(): void {
 
     $this->from(route('igniter.theme.order'))
         ->put(route('igniter.theme.fulfillment.update'), ['order_type' => 'collection', 'asap' => true])
-        ->assertSessionHasErrors(['form' => 'Choose a location first.']);
+        ->assertSessionHasErrors(['form' => 'alert.choose_location_first']);
 });
 
 it('updates the delivery address', function(): void {
@@ -201,13 +201,13 @@ it('rejects a saved delivery address it cannot find', function(): void {
 
     $this->from(route('igniter.theme.order'))
         ->put(route('igniter.theme.fulfillment.update'), fulfilment(['address' => null, 'address_id' => 999999]))
-        ->assertSessionHasErrors(['form' => 'That saved address could not be found.']);
+        ->assertSessionHasErrors(['form' => 'alert.saved_address_missing']);
 });
 
 it('asks for a delivery address', function(): void {
     $this->from(route('igniter.theme.order'))
         ->put(route('igniter.theme.fulfillment.update'), fulfilment(['address' => '  ']))
-        ->assertSessionHasErrors(['form' => 'Enter your delivery address.']);
+        ->assertSessionHasErrors(['form' => 'alert.enter_address']);
 });
 
 it('uses a dropped pin as the delivery address', function(): void {
@@ -224,7 +224,7 @@ it('explains a pin it cannot place for delivery', function(): void {
 
     $this->from(route('igniter.theme.order'))
         ->put(route('igniter.theme.fulfillment.update'), fulfilment(['latitude' => 51.5, 'longitude' => -0.12]))
-        ->assertSessionHasErrors(['form' => "We couldn't work out your address from your location. Type it in instead."]);
+        ->assertSessionHasErrors(['form' => 'alert.location_address_failed']);
 });
 
 it('explains a pin with no address for delivery', function(): void {
@@ -234,7 +234,7 @@ it('explains a pin with no address for delivery', function(): void {
 
     $this->from(route('igniter.theme.order'))
         ->put(route('igniter.theme.fulfillment.update'), fulfilment(['address' => null, 'latitude' => 51.5, 'longitude' => -0.12]))
-        ->assertSessionHasErrors(['form' => "We couldn't work out your address from your location. Type it in instead."]);
+        ->assertSessionHasErrors(['form' => 'alert.location_address_failed']);
 });
 
 it('requires a known address when coverage is required', function(): void {
@@ -243,7 +243,7 @@ it('requires a known address when coverage is required', function(): void {
 
     $this->from(route('igniter.theme.order'))
         ->put(route('igniter.theme.fulfillment.update'), fulfilment())
-        ->assertSessionHasErrors(['form' => 'We could not find that address. Check it and try again.']);
+        ->assertSessionHasErrors(['form' => 'alert.address_not_found_check']);
 });
 
 it('requires an address inside the delivery area when coverage is required', function(): void {
@@ -253,7 +253,7 @@ it('requires an address inside the delivery area when coverage is required', fun
 
     $this->from(route('igniter.theme.order'))
         ->put(route('igniter.theme.fulfillment.update'), fulfilment())
-        ->assertSessionHasErrors(['form' => $this->location->location_name.' does not deliver to that address.']);
+        ->assertSessionHasErrors(['form' => 'alert.no_delivery_to_address']);
 });
 
 // Map pin lookup
@@ -271,5 +271,5 @@ it('says when a map pin has no address', function(): void {
 
     $this->postJson(route('igniter.theme.fulfillment.locate'), ['latitude' => 51.5, 'longitude' => -0.12])
         ->assertStatus(422)
-        ->assertJsonPath('message', "We couldn't find an address there. Drag the map and try again.");
+        ->assertJsonPath('message', 'alert.pin_no_address');
 });

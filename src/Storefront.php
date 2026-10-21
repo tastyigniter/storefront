@@ -46,11 +46,14 @@ final class Storefront
 
     /**
      * A line from the active theme's language namespace (`<namespace>::default.<key>`),
-     * as edited under Localisation > Languages.
+     * as edited under Localisation > Languages. A missing line is the key.
      */
     public static function lang(string $key, array $replace = []): string
     {
-        return lang(self::config()->langNamespace.'::default.'.$key, $replace);
+        $lookup = self::config()->langNamespace.'::default.'.$key;
+        $line = lang($lookup, $replace);
+
+        return $line === $lookup ? $key : $line;
     }
 
     /**

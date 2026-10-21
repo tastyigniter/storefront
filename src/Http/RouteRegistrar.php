@@ -84,6 +84,8 @@ class RouteRegistrar
 
             $router->post('fulfillment', [FulfillmentController::class, 'store'])->middleware('throttle:60,1')->name('fulfillment');
             $router->post('fulfillment/locate', [FulfillmentController::class, 'locate'])->middleware('throttle:60,1')->name('fulfillment.locate');
+            $router->get('fulfillment/suggestions', [FulfillmentController::class, 'suggestions'])->middleware('throttle:120,1')->name('fulfillment.suggestions');
+            $router->get('fulfillment/place', [FulfillmentController::class, 'place'])->middleware('throttle:60,1')->name('fulfillment.place');
             $router->put('fulfillment', [FulfillmentController::class, 'update'])->middleware('throttle:60,1')->name('fulfillment.update');
             $router->post('session', [FulfillmentController::class, 'session'])->name('session');
             $router->post('cart', [CartController::class, 'store'])->name('cart.store');

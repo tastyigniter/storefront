@@ -39,6 +39,29 @@ it('syncs and resolves the footer menu', function(): void {
         ->and($menu[0]['items'][0])->toBe(['title' => 'Order online', 'url' => '/order', 'items' => []]);
 });
 
+it('hides the locations link in single location mode', function(): void {
+    glassThemeRecord();
+    setThemeSettings(['single_location' => true]);
+
+    $titles = array_column(ThemeContent::menu('main-menu'), 'title');
+
+    expect($titles)->toContain('Order online')
+        ->and($titles)->not->toContain('Locations');
+});
+
+it('points the homepage button at the default location', function(): void {
+    $location = currentLocation();
+    $location->makeDefault();
+    setThemeSettings(['home_order_button' => true]);
+
+    expect(ThemeContent::orderButton())->toBe('/'.$location->permalink_slug.'/order')
+        ->and(ThemeContent::home(null, 'delivery')['orderButton'])->toBe('/'.$location->permalink_slug.'/order');
+
+    setThemeSettings(['home_order_button' => false]);
+
+    expect(ThemeContent::orderButton())->toBeNull();
+});
+
 it('returns no links for a menu the theme does not define', function(): void {
     glassThemeRecord();
 

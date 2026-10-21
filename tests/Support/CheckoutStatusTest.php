@@ -24,7 +24,7 @@ it('asks for a location when there is none', function(): void {
 
     expect(CheckoutStatus::current())->toBe([
         'blocked' => true,
-        'reason' => 'Choose a location to order from.',
+        'reason' => 'alert.choose_location_order',
         'minimum' => null,
     ]);
 });
@@ -49,8 +49,7 @@ it('explains the minimum order', function(): void {
     locationSettings($this->location, 'delivery', ['min_order_amount' => 100]);
     addMenuToCart();
 
-    expect(CheckoutStatus::current('reason'))
-        ->toBe('Add '.Money::label(90).' more to reach the '.Money::label(100).' minimum for delivery.');
+    expect(CheckoutStatus::current('reason'))->toBe('alert.below_minimum');
 });
 
 it('suggests scheduling when the kitchen is closed but opens later', function(): void {
@@ -60,7 +59,7 @@ it('suggests scheduling when the kitchen is closed but opens later', function():
     $location->shouldReceive('hasLaterSchedule')->andReturnTrue();
 
     expect(CheckoutStatus::current('reason'))
-        ->toBe("We're closed for that time. Change your order details to schedule it for when we're open.");
+        ->toBe('alert.closed_later');
 });
 
 it('says when the kitchen is closed', function(): void {
@@ -70,7 +69,7 @@ it('says when the kitchen is closed', function(): void {
     $location->shouldReceive('hasLaterSchedule')->andReturnFalse();
 
     expect(CheckoutStatus::current('reason'))
-        ->toBe("Sorry, we're closed right now. Please come back during our opening times.");
+        ->toBe('alert.closed_now');
 });
 
 it('says when delivery is unavailable for the order', function(): void {
@@ -80,7 +79,7 @@ it('says when delivery is unavailable for the order', function(): void {
     app()->instance(CartManager::class, $manager);
 
     expect(CheckoutStatus::current('reason'))
-        ->toBe("Delivery isn't available for this order. Try collection or another address.");
+        ->toBe('alert.delivery_unavailable');
 });
 
 it('blocks checkout when the basket cannot be read', function(): void {
@@ -88,7 +87,7 @@ it('blocks checkout when the basket cannot be read', function(): void {
 
     expect(CheckoutStatus::current())->toBe([
         'blocked' => true,
-        'reason' => 'Checkout is unavailable right now. Please try again.',
+        'reason' => 'alert.checkout_unavailable',
         'minimum' => null,
     ]);
 });

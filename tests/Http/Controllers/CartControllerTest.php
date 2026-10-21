@@ -64,7 +64,7 @@ it('shows a general error when something unexpected fails', function(): void {
 
     $this->from(route('igniter.theme.order'))
         ->post(route('igniter.theme.cart.store'), ['menu_id' => 1])
-        ->assertSessionHasErrors(['form' => 'Something went wrong. Please try again.']);
+        ->assertSessionHasErrors(['form' => 'alert.something_wrong']);
 });
 
 it('returns a dish as json for the options modal', function(): void {

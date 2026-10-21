@@ -24,7 +24,7 @@ it('puts dishes without a category in a menu group', function(): void {
     $groups = MenuCatalog::grouped($this->location, 'delivery', 'loose');
 
     expect($groups)->toHaveCount(1)
-        ->and($groups[0])->toMatchArray(['id' => 0, 'name' => 'Menu', 'slug' => 'menu'])
+        ->and($groups[0])->toMatchArray(['id' => 0, 'name' => 'site.menu_group', 'slug' => 'menu'])
         ->and($groups[0]['items'][0]['name'])->toBe('Loose dish');
 });
 

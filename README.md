@@ -1,39 +1,74 @@
 ## Introduction
 
-Glass is a modern glassmorphism storefront theme for the TastyIgniter restaurant online ordering platform. It is built with Inertia, Vue 3 and Tailwind CSS, so the menu, basket, checkout and account pages behave like a single-page app: no full page reloads, instant basket updates and modals for dish options and order details. It suits any restaurant, cafe, takeaway or food delivery business.
+Storefront is the shared ordering engine for TastyIgniter themes. It provides the PHP routes, controllers, and checkout flow for the menu, basket, booking, and account pages, plus the Vue modules those pages import.
 
-Glass is built on the same TastyIgniter extensions as the Orange theme (cart, local, reservation, payregister, pages and frontend), so orders, reservations, payments, delivery areas and static pages work the same way. Theme options are managed from the Theme Editor, and extensions can still add checkout fields and validation through the usual events.
+A theme supplies its own pages, layout, language lines, and styles. Storefront stays out of the visual design. Glass and Plum are two themes built on it.
+
+The PHP package is `tastyigniter/storefront`. The Vue modules are published separately as [`@tastyigniter/storefront`](https://www.npmjs.com/package/@tastyigniter/storefront).
 
 ## Features
 
-- Glassmorphism design that works on phones, tablets and desktops
-- Menu grouped by category with search, allergen filters and mealtime availability
-- Add-to-basket in one tap, with an options modal for customisable dishes and quantity steppers
-- Basket drawer with coupons, tips, minimum-order and opening-hours messages
-- Order details modal for delivery or pick-up, ASAP or scheduled times, and saved addresses
-- Delivery address search with "use my current location" and a draggable map pin (Google Maps or OpenStreetMap)
-- Checkout built from the cart extension's checkout form, so extension fields appear automatically
-- Payment forms for Stripe, Square and Authorize.Net, plus offsite gateways such as PayPal, Mollie and Stripe Checkout
-- Saved cards, reorder, cancel, and leave-a-review on orders and reservations
-- Table booking with a calendar, time picker and guest details all on one page
-- Customer account pages: profile, addresses, orders, reservations and account deletion
-- Homepage hero slider, banners and featured dishes, configurable from the Theme Editor
-- Static pages and navigation menus from the Pages extension
-- Cookie banner, social links and reCAPTCHA on contact, register and booking forms
-- Single-page storefront built with Inertia, Vue 3 and Tailwind CSS
+- Inertia storefront for online ordering and table booking
+- Menu, basket, checkout, contact, locations, and static pages
+- Customer account for profile, addresses, orders, and reservations
+- Delivery and collection scheduling, including saved addresses
+- Payment clients for the payregister gateways a location has enabled
+- Optional group ordering, dine-in tables, loyalty points, and gift cards when those extensions are installed
+- Shared Vue helpers for routes, copy, the basket drawer, and maps
 
-## Documentation
+## How to Use
 
-Documentation can be found on the [TastyIgniter documentation website](https://tastyigniter.com/docs/themes/igniterlabs-glass).
+Require the PHP package from the theme:
+
+```bash
+composer require tastyigniter/storefront
+```
+
+Register the theme when its service provider boots. Routes and pages run only while this theme is the active one. `langNamespace` is the theme's own language file, edited under Localisation > Languages.
+
+```php
+use Igniter\Storefront\Config;
+use Igniter\Storefront\Storefront;
+
+Storefront::register(new Config(
+    theme: 'igniterlabs-plum',
+    rootView: 'plum::app',
+    defaultBackground: '#fbf5f8',
+    defaultRing: '#5f0f40',
+    defaultFontUrl: 'https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap',
+    defaultFontFamily: 'DM Sans',
+    pwaDirectory: __DIR__.'/../resources/pwa',
+    langNamespace: 'igniterlabs.plum',
+));
+```
+
+Load the theme's Blade root view and translations from that same provider. The root view is the Inertia document. Page components live in the theme at `resources/js/pages` and are not part of this package.
+
+Install the Vue modules next to Vue, Inertia, and TanStack Store. Those three are peer dependencies, so the theme keeps a single copy of each. Vite compiles the TypeScript source. There is no separate storefront build.
+
+```bash
+npm install @tastyigniter/storefront@4.0 vue @inertiajs/vue3 @tanstack/vue-store
+```
+
+```ts
+import { t } from '@tastyigniter/storefront/lang';
+import { route, syncRoutes } from '@tastyigniter/storefront/routes';
+import { useStorefront } from '@tastyigniter/storefront/storefront';
+import { openCart } from '@tastyigniter/storefront/ui';
+```
 
 ## Reporting issues
 
-If you encounter a bug in this theme, please report it using the [Community Forum](https://forum.tastyigniter.com/).
+If you encounter a bug in this package, please report it using the [Issue Tracker](https://github.com/tastyigniter/TastyIgniter/issues) on GitHub.
+
+## Contributing
+
+Contributions are welcome! Please read [TastyIgniter's contributing guide](https://tastyigniter.com/docs/resources/contribution-guide).
 
 ## Security vulnerabilities
 
-For reporting security vulnerabilities, please send an e-mail to <support@tastyigniter.com>.
+For reporting security vulnerabilities, please see [our security policy](https://github.com/tastyigniter/storefront/security/policy).
 
 ## License
 
-TastyIgniter Glass Theme is open-source software licensed under the [MIT license](LICENSE.md).
+TastyIgniter Storefront is open-source software licensed under the [MIT license](https://github.com/tastyigniter/storefront/blob/main/LICENSE.md).

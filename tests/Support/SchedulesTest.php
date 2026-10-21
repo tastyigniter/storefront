@@ -50,10 +50,10 @@ it('describes an order scheduled later in the week', function(): void {
 
 it('labels orders for today and tomorrow', function(): void {
     Location::putSession('delivery-timeslot', ['dateTime' => now()->setTime(15, 0), 'isAsap' => false]);
-    expect(Schedules::fulfilment('timeLabel'))->toBe('Today, 3:00 PM');
+    expect(Schedules::fulfilment('timeLabel'))->toBe('schedule.today, 3:00 PM');
 
     Location::putSession('delivery-timeslot', ['dateTime' => now()->addDay()->setTime(9, 15), 'isAsap' => false]);
-    expect(Schedules::fulfilment('timeLabel'))->toBe('Tomorrow, 9:15 AM');
+    expect(Schedules::fulfilment('timeLabel'))->toBe('schedule.tomorrow, 9:15 AM');
 });
 
 it('formats clock times', function(): void {

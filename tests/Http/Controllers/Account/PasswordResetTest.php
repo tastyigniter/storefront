@@ -34,7 +34,7 @@ it('creates a reset code for a known email', function(): void {
 it('gives the same answer for an unknown email', function(): void {
     $this->from(route('igniter.theme.account.forgot'))
         ->post(route('igniter.theme.account.forgot'), ['email' => 'nobody@example.test'])
-        ->assertSessionHas('success', 'If that email belongs to an account, a reset link is on its way.');
+        ->assertSessionHas('success', 'alert.reset_link_sent');
 });
 
 it('validates the forgot password form', function(): void {
@@ -58,7 +58,7 @@ it('resets the password with a valid code', function(): void {
         'password' => 'new-secret',
         'password_confirmation' => 'new-secret',
     ])->assertRedirect(route('igniter.theme.account.login'))
-        ->assertSessionHas('success', 'Your password has been updated.');
+        ->assertSessionHas('success', 'alert.password_updated');
 
     expect(Hash::check('new-secret', $customer->fresh()->password))->toBeTrue();
 });

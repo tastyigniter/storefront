@@ -66,7 +66,7 @@ it("will not reorder another customer's order", function(): void {
 
     $this->from(route('igniter.theme.home'))
         ->post(route('igniter.theme.order.reorder', ['hash' => $order->hash]))
-        ->assertSessionHasErrors(['form' => lang('storefront.fixture::default.alert.order_not_found')]);
+        ->assertSessionHasErrors(['form' => 'alert.order_not_found']);
 });
 
 it('reorders a guest order from its link', function(): void {
@@ -85,7 +85,7 @@ it('will not act on an unpaid order', function(): void {
 
     $this->from(route('igniter.theme.account.orders'))
         ->post(route('igniter.theme.order.reorder', ['hash' => $order->hash]))
-        ->assertSessionHasErrors(['form' => 'That order could not be found.']);
+        ->assertSessionHasErrors(['form' => 'alert.order_not_found']);
 });
 
 it('cancels an order inside the cancellation window', function(): void {
@@ -114,11 +114,11 @@ it('asks a guest to confirm the order email before cancelling', function(): void
 
     $this->from(route('igniter.theme.home'))
         ->post(route('igniter.theme.order.cancel', ['hash' => $order->hash]))
-        ->assertSessionHasErrors(['email' => lang('storefront.fixture::default.alert.cancel_email_mismatch')]);
+        ->assertSessionHasErrors(['email' => 'alert.cancel_email_mismatch']);
 
     $this->from(route('igniter.theme.home'))
         ->post(route('igniter.theme.order.cancel', ['hash' => $order->hash]), ['email' => 'wrong@example.test'])
-        ->assertSessionHasErrors(['email' => lang('storefront.fixture::default.alert.cancel_email_mismatch')]);
+        ->assertSessionHasErrors(['email' => 'alert.cancel_email_mismatch']);
 
     expect($order->fresh()->isCanceled())->toBeFalse();
 
@@ -141,7 +141,7 @@ it("will not cancel another customer's order by repeating their email", function
 
     $this->from(route('igniter.theme.home'))
         ->post(route('igniter.theme.order.cancel', ['hash' => $order->hash]), ['email' => 'other@example.test'])
-        ->assertSessionHasErrors(['form' => lang('storefront.fixture::default.alert.order_not_found')]);
+        ->assertSessionHasErrors(['form' => 'alert.order_not_found']);
 
     expect($order->fresh()->isCanceled())->toBeFalse();
 });
@@ -160,6 +160,6 @@ it('reports a missing or unpaid order when cancelling', function(): void {
     foreach (['missing', $order->hash] as $hash) {
         $this->from(route('igniter.theme.home'))
             ->post(route('igniter.theme.order.cancel', ['hash' => $hash]))
-            ->assertSessionHasErrors(['form' => lang('storefront.fixture::default.alert.order_not_found')]);
+            ->assertSessionHasErrors(['form' => 'alert.order_not_found']);
     }
 });

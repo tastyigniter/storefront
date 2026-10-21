@@ -127,6 +127,6 @@ it('shares an empty basket when the basket cannot be read', function(): void {
     expect(StorefrontState::shared('cart'))->toMatchArray([
         'count' => 0,
         'lines' => [],
-        'checkout' => ['blocked' => true, 'reason' => 'Something went wrong. Please try again.', 'minimum' => null],
+        'checkout' => ['blocked' => true, 'reason' => 'alert.something_wrong', 'minimum' => null],
     ]);
 });

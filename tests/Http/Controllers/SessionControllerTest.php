@@ -36,7 +36,7 @@ it('rejects a disabled kitchen', function(): void {
 
     $this->from(route('igniter.theme.order'))
         ->post(route('igniter.theme.session'), ['location_id' => $disabled->getKey()])
-        ->assertSessionHasErrors(['form' => 'That location is not available.']);
+        ->assertSessionHasErrors(['form' => 'alert.location_unavailable']);
 });
 
 it('rejects delivery from a kitchen without delivery', function(): void {
@@ -45,7 +45,7 @@ it('rejects delivery from a kitchen without delivery', function(): void {
 
     $this->from(route('igniter.theme.order'))
         ->post(route('igniter.theme.session'), ['location_id' => $other->getKey(), 'order_type' => 'delivery'])
-        ->assertSessionHasErrors(['form' => 'This location does not offer delivery.']);
+        ->assertSessionHasErrors(['form' => 'alert.no_delivery']);
 });
 
 it('rejects collection from a kitchen without collection', function(): void {
@@ -54,7 +54,7 @@ it('rejects collection from a kitchen without collection', function(): void {
 
     $this->from(route('igniter.theme.order'))
         ->post(route('igniter.theme.session'), ['location_id' => $other->getKey(), 'order_type' => 'collection'])
-        ->assertSessionHasErrors(['form' => 'This location does not offer collection.']);
+        ->assertSessionHasErrors(['form' => 'alert.no_collection']);
 });
 
 it('stays on the page it was opened from', function(): void {

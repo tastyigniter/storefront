@@ -23,7 +23,7 @@ it('lists opening hours for today and the week', function(): void {
     $week = Hours::week($location->fresh());
     expect($week)->toHaveCount(7)
         ->and($week[0])->toBe(['day' => 'Mon', 'hours' => '09:00 – 14:00, 17:00 – 22:00'])
-        ->and($week[1])->toBe(['day' => 'Tue', 'hours' => 'Closed']);
+        ->and($week[1])->toBe(['day' => 'Tue', 'hours' => 'hours.closed']);
 });
 
 it('formats date objects as clock times', function(): void {
@@ -45,8 +45,8 @@ it('shows a week open around the clock as one row', function(): void {
         ]);
     }
 
-    expect(Hours::week($location->fresh()))->toBe([['day' => 'Mon–Sun', 'hours' => 'Open 24 hours']])
-        ->and(Hours::today($location->fresh()))->toBe('Open 24 hours');
+    expect(Hours::week($location->fresh()))->toBe([['day' => 'Mon–Sun', 'hours' => 'hours.all_day']])
+        ->and(Hours::today($location->fresh()))->toBe('hours.all_day');
 });
 
 it('lists each day when only some are open around the clock', function(): void {
@@ -56,6 +56,6 @@ it('lists each day when only some are open around the clock', function(): void {
     $week = Hours::week($location->fresh());
 
     expect($week)->toHaveCount(7)
-        ->and($week[0])->toBe(['day' => 'Mon', 'hours' => 'Open 24 hours'])
-        ->and($week[1]['hours'])->toBe('Closed');
+        ->and($week[0])->toBe(['day' => 'Mon', 'hours' => 'hours.all_day'])
+        ->and($week[1]['hours'])->toBe('hours.closed');
 });

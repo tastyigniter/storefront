@@ -59,7 +59,7 @@ it('saves a new address', function(): void {
 
     $this->post(route('igniter.theme.account.address.store'), addressData())
         ->assertRedirect(route('igniter.theme.account.address'))
-        ->assertSessionHas('success', 'Address saved.');
+        ->assertSessionHas('success', 'alert.address_saved');
 
     expect($customer->addresses()->first())
         ->address_1->toBe('1 Test Street')
@@ -84,7 +84,7 @@ it("will not edit another customer's address", function(): void {
 
     $this->from(route('igniter.theme.account.address'))
         ->post(route('igniter.theme.account.address.store'), addressData(['address_id' => $address->getKey()]))
-        ->assertSessionHasErrors(['form' => 'That address could not be found.']);
+        ->assertSessionHasErrors(['form' => 'alert.address_not_found']);
 });
 
 it('removes an address', function(): void {
@@ -93,7 +93,7 @@ it('removes an address', function(): void {
 
     $this->from(route('igniter.theme.account.address'))
         ->delete(route('igniter.theme.account.address.destroy', ['addressId' => $address->getKey()]))
-        ->assertSessionHas('success', 'Address removed.');
+        ->assertSessionHas('success', 'alert.address_removed');
 
     expect(Address::find($address->getKey()))->toBeNull();
 });
@@ -103,5 +103,5 @@ it('reports an address it cannot find', function(): void {
 
     $this->from(route('igniter.theme.account.address'))
         ->delete(route('igniter.theme.account.address.destroy', ['addressId' => 999999]))
-        ->assertSessionHasErrors(['form' => 'That address could not be found.']);
+        ->assertSessionHasErrors(['form' => 'alert.address_not_found']);
 });

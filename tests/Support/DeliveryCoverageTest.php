@@ -44,7 +44,7 @@ it('reports an address outside the delivery areas', function(): void {
     locationSettings($this->location, 'collection', ['is_enabled' => 0]);
 
     expect(DeliveryCoverage::check($this->location, geoPosition(40.7, -74.0)))->toBe(DeliveryCoverage::OUTSIDE)
-        ->and(DeliveryCoverage::message())->toBe(['error', 'Sorry, '.$this->location->location_name." doesn't deliver to your address yet."]);
+        ->and(DeliveryCoverage::message())->toBe(['error', 'alert.coverage_outside']);
 });
 
 it('says nothing about coverage for collection orders', function(): void {

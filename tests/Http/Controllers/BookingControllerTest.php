@@ -49,7 +49,7 @@ it('sends customers home when there is no location to book', function(): void {
 
     $this->get(route('igniter.theme.booking'))
         ->assertRedirect(route('igniter.theme.home'))
-        ->assertSessionHas('error', 'Choose a location before booking.');
+        ->assertSessionHas('error', 'alert.choose_location_booking');
 });
 
 it('books a table', function(): void {
@@ -75,15 +75,15 @@ it('shows a general error when booking fails', function(): void {
 
     $this->from(route('igniter.theme.booking'))
         ->post(route('igniter.theme.booking.store'), booking())
-        ->assertSessionHasErrors(['form' => 'Something went wrong. Please try again.']);
+        ->assertSessionHasErrors(['form' => 'alert.something_wrong']);
 });
 
 it('rejects dates outside the advance booking window', function(): void {
     $this->post(route('igniter.theme.booking.store'), booking(['date' => now()->subDay()->toDateString()]))
-        ->assertSessionHasErrors(['date' => 'That date is too soon to book. Pick another date from the calendar.']);
+        ->assertSessionHasErrors(['date' => 'alert.date_too_soon']);
 
     $this->post(route('igniter.theme.booking.store'), booking(['date' => now()->addYears(2)->toDateString()]))
-        ->assertSessionHasErrors(['date' => 'That date is too far ahead to book. Pick another date from the calendar.']);
+        ->assertSessionHasErrors(['date' => 'alert.date_too_far']);
 });
 
 it('shows the booking confirmation', function(): void {
@@ -129,7 +129,7 @@ it('asks a guest to confirm the booking email before cancelling', function(): vo
 
     $this->from(route('igniter.theme.booking.success', ['hash' => $reservation->hash]))
         ->post(route('igniter.theme.reservation.cancel', ['hash' => $reservation->hash]), ['email' => 'wrong@example.test'])
-        ->assertSessionHasErrors(['email' => lang('storefront.fixture::default.alert.cancel_email_mismatch')]);
+        ->assertSessionHasErrors(['email' => 'alert.cancel_email_mismatch']);
 
     expect($reservation->fresh()->isCanceled())->toBeFalse();
 
@@ -154,7 +154,7 @@ it('will not cancel a booking that belongs to another customer', function(): voi
 
     $this->from(route('igniter.theme.home'))
         ->post(route('igniter.theme.reservation.cancel', ['hash' => $reservation->hash]), ['email' => 'other@example.test'])
-        ->assertSessionHasErrors(['form' => lang('storefront.fixture::default.alert.booking_not_found')]);
+        ->assertSessionHasErrors(['form' => 'alert.booking_not_found']);
 
     expect($reservation->fresh()->isCanceled())->toBeFalse();
 });
@@ -191,7 +191,7 @@ it('reports a missing or already cancelled booking', function(): void {
 
     $this->from(route('igniter.theme.home'))
         ->post(route('igniter.theme.reservation.cancel', ['hash' => 'missing']))
-        ->assertSessionHasErrors(['form' => lang('storefront.fixture::default.alert.booking_not_found')]);
+        ->assertSessionHasErrors(['form' => 'alert.booking_not_found']);
 
     $this->from(route('igniter.theme.home'))
         ->post(route('igniter.theme.reservation.cancel', ['hash' => $reservation->hash]))
