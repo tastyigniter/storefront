@@ -1,8 +1,10 @@
 {
   "name": "@tastyigniter/storefront",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "type": "module",
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "exports": {
     "./ui": "./src/ui.ts",
     "./types": "./src/types.ts",

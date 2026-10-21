@@ -94,3 +94,11 @@ it('says when a picked suggestion cannot be placed', function(): void {
         ->assertUnprocessable()
         ->assertJsonStructure(['message']);
 });
+
+it('says when the geocoder cannot look up a picked suggestion', function(): void {
+    geocoderProvider()->shouldReceive('getPlaceCoordinates')->andThrow(new RuntimeException('quota'));
+
+    $this->getJson(route('igniter.theme.fulfillment.place', ['placeId' => 'g-2']))
+        ->assertUnprocessable()
+        ->assertExactJson(['message' => 'alert.address_not_found_check']);
+});

@@ -8,6 +8,7 @@ use Igniter\Cart\Models\Menu;
 use Igniter\Frontend\Models\Banner;
 use Igniter\Frontend\Models\CaptchaSettings;
 use Igniter\Frontend\Models\Slider;
+use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Main\Classes\ThemeManager;
 use Igniter\Main\Models\Theme as ThemeModel;
 use Igniter\Pages\Classes\MenuManager;
@@ -60,6 +61,16 @@ it('points the homepage button at the default location', function(): void {
     setThemeSettings(['home_order_button' => false]);
 
     expect(ThemeContent::orderButton())->toBeNull();
+});
+
+it('points the homepage button at the order page when the default location has no slug', function(): void {
+    $location = currentLocation();
+    $location->makeDefault();
+    LocationModel::query()->whereKey($location->getKey())->update(['permalink_slug' => '']);
+    LocationModel::clearDefaultModel();
+    setThemeSettings(['home_order_button' => true]);
+
+    expect(ThemeContent::orderButton())->toBe(route('igniter.theme.order.current', absolute: false));
 });
 
 it('returns no links for a menu the theme does not define', function(): void {

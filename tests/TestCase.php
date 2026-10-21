@@ -12,13 +12,43 @@ use Igniter\Storefront\Tests\Fixture\ServiceProvider as FixtureServiceProvider;
 use Igniter\System\Models\Country;
 use Igniter\System\Models\Currency;
 use Igniter\User\Models\CustomerGroup;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\File;
 use Inertia\ServiceProvider as InertiaServiceProvider;
 use Override;
+use PDO;
+use Throwable;
 
 abstract class TestCase extends \SamPoyigi\Testbench\TestCase
 {
+    /**
+     * Committed once per process, before the per-test transaction. Otherwise every
+     * page inserts storefront-fixture and a second run deadlocks on themes.code.
+     */
+    private static bool $fixtureThemeReady = false;
+
+    #[Override]
+    protected function defineDatabaseMigrations(): void
+    {
+        parent::defineDatabaseMigrations();
+
+        if (self::$fixtureThemeReady) {
+            return;
+        }
+
+        retry(5, function(): void {
+            Theme::query()->updateOrCreate(['code' => 'storefront-fixture'], [
+                'name' => 'Storefront Fixture',
+                'version' => '1.0.0',
+                'status' => true,
+            ]);
+        }, 100, fn(Throwable $exception): bool => $exception instanceof QueryException
+            && in_array((int)($exception->errorInfo[1] ?? 0), [1213, 1205], true));
+
+        self::$fixtureThemeReady = true;
+    }
+
     #[Override]
     protected function setUp(): void
     {

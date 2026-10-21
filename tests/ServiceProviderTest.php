@@ -14,11 +14,14 @@ use Illuminate\Support\Facades\Route;
 use Mockery;
 
 it('registers the storefront routes', function(): void {
+    Route::get('outside', fn(): string => 'ok')->name('igniter.theme.outside');
+
     expect(route('igniter.theme.home', absolute: false))->toBe('/')
         ->and(route('igniter.theme.checkout.success', ['hash' => 'abc'], false))->toBe('/checkout/success/abc')
         ->and(StorefrontRoutes::templates('igniter.theme.checkout.store'))->toBe('/checkout')
         ->and(StorefrontRoutes::templates('igniter.theme.account.login.store'))->toBe('/login')
-        ->and(StorefrontRoutes::templates('igniter.theme.cart.update'))->toBe('/cart/{rowId}');
+        ->and(StorefrontRoutes::templates('igniter.theme.cart.update'))->toBe('/cart/{rowId}')
+        ->and(StorefrontRoutes::templates())->not->toHaveKey('igniter.theme.outside');
 });
 
 it('resolves menu links before the storefront routes are registered', function(): void {
