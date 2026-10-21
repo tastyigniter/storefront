@@ -1,0 +1,23 @@
+{
+  "name": "@tastyigniter/storefront",
+  "version": "4.0.0",
+  "type": "module",
+  "files": ["src"],
+  "exports": {
+    "./ui": "./src/ui.ts",
+    "./types": "./src/types.ts",
+    "./payments": "./src/payments.ts",
+    "./maps": "./src/maps.ts",
+    "./routes": "./src/routes.ts",
+    "./lang": "./src/lang.ts",
+    "./time": "./src/time.ts",
+    "./storefront": "./src/storefront.ts",
+    "./formError": "./src/formError.ts",
+    "./focusTrap": "./src/focusTrap.ts"
+  },
+  "peerDependencies": {
+    "vue": "^3.5.0",
+    "@inertiajs/vue3": "^3.0.0",
+    "@tanstack/vue-store": "^0.8.0"
+  }
+}
