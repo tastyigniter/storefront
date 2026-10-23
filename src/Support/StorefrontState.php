@@ -284,6 +284,7 @@ class StorefrontState
             'image' => $image,
             'qty' => (int)$item->qty,
             'comment' => (string)$item->comment,
+            'course' => (string)(session('igniterlabs_dinein.courses.'.$item->rowId) ?: 'now'),
             'price' => Money::label($item->price),
             'subtotal' => Money::label($item->subtotal()),
             'selected' => collect($raw['options'] ?? [])->mapWithKeys(function(mixed $option): array {

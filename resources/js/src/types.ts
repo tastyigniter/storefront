@@ -28,6 +28,8 @@ export interface CartLine {
     image: string | null;
     qty: number;
     comment: string;
+    /** Dine-in course: now, with the mains, or held. */
+    course?: string;
     price: string;
     subtotal: string;
     options: Array<{ name: string; values: string[] }>;
@@ -57,11 +59,40 @@ export interface Fulfilment {
     coverage: null | { status: 'covered' | 'outside'; area: string | null; conditions: string[]; collection: boolean };
 }
 
+export interface DineInSeat {
+    x: number;
+    y: number;
+    rotation: number;
+    shape: string;
+}
+
 export interface DineInState {
-    areas: Array<{ id: number; name: string }>;
-    tables: Array<{ id: number; areaId: number; name: string; guests: string }>;
+    areas: Array<{ id: number; name: string; floorPlan: { stage?: { x: number; y: number; scaleX: number; scaleY: number } } | null }>;
+    tables: Array<{
+        id: number;
+        areaId: number;
+        name: string;
+        guests: string;
+        min: number;
+        max: number;
+        available: boolean;
+        seat: DineInSeat;
+    }>;
     areaId: number | null;
     tableId: number | null;
+    seated: boolean;
+    locked: boolean;
+    guestCount: number | null;
+    payLater: boolean;
+    kitchenUrl: string | null;
+    requestUrl: string | null;
+    courseUrl: string | null;
+    requests: string[];
+    payable: boolean;
+    billTotal: string | null;
+    payOpenBill: boolean;
+    payUrl: string | null;
+    checkoutUrl: string | null;
 }
 
 export interface LoyaltyState {
@@ -286,6 +317,7 @@ export interface OrderDetail {
     canReorder: boolean;
     isCanceled: boolean;
     table?: { name: string; area: string | null; guests: string } | null;
+    tab?: { code: string; label: string } | null;
 }
 
 /** Page links for a storefront list; hidden while everything fits on one page. */

@@ -26,6 +26,7 @@ class UpdateFulfilmentRequest extends FormRequest
             'longitude' => ['nullable', 'required_with:latitude', 'numeric', 'between:-180,180'],
             'area_id' => ['nullable', 'integer'],
             'table_id' => ['nullable', 'integer'],
+            'guest_count' => ['nullable', 'integer', 'min:1', 'max:99'],
         ];
     }
 }

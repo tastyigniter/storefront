@@ -72,7 +72,12 @@ class Fulfilment
         ?float $longitude = null,
         ?int $areaId = null,
         ?int $tableId = null,
+        ?int $guestCount = null,
     ): void {
+        if ($locked = DineInTables::lockOrderType($orderType)) {
+            [$areaId, $tableId] = $locked;
+        }
+
         $location = Location::current() ?? Location::currentOrDefault();
         if (!$location instanceof LocationModel) {
             throw new ApplicationException(Storefront::lang('alert.choose_location_first'));
@@ -96,7 +101,9 @@ class Fulfilment
         }
 
         // Guests keep the host's table. Anyone else stores the table they just chose.
-        GroupOrders::hostTableId() ? DineInTables::pinHostTable() : ($orderType !== 'dinein' || DineInTables::remember((int)$location->getKey(), $areaId, $tableId));
+        GroupOrders::hostTableId()
+            ? DineInTables::pinHostTable()
+            : ($orderType !== 'dinein' || DineInTables::remember((int)$location->getKey(), $areaId, $tableId, $guestCount));
 
         Location::updateOrderType($orderType);
 

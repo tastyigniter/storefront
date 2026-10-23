@@ -15,7 +15,9 @@ use Igniter\Storefront\Support\Money;
 use Igniter\Storefront\Support\OrderProgress;
 use Igniter\Storefront\Support\StorefrontState;
 use Igniter\System\Models\Country;
+use IgniterLabs\DineIn\View\TabStatus;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Route;
 
 trait PresentsStorefront
 {
@@ -104,6 +106,9 @@ trait PresentsStorefront
             'canReorder' => $order->menus->isNotEmpty(),
             'isCanceled' => $order->isCanceled(),
             'table' => DineInTables::details($order),
+            'tab' => class_exists(TabStatus::class)
+                ? TabStatus::forOrder($order)
+                : null,
         ];
     }
 
@@ -148,8 +153,24 @@ trait PresentsStorefront
             'telephone' => $reservation->telephone,
             'status' => (string)($reservation->status_name ?? ''),
             'canCancel' => !$reservation->isCanceled() && (bool)$reservation->isCancelable(),
+            'preorderUrl' => self::reservationPreorderUrl($reservation),
             'confirmEmail' => CancelConfirmation::required($reservation->customer_id ? (int)$reservation->customer_id : null),
             'isCanceled' => $reservation->isCanceled(),
         ];
+    }
+
+    protected static function reservationPreorderUrl(Reservation $reservation): ?string
+    {
+        if (!Route::has('igniterlabs.dinein.reservation')) {
+            return null;
+        }
+
+        if (!$reservation->isCompleted()) {
+            return null;
+        }
+
+        $table = $reservation->tables()->whereIsRoot()->where('dining_tables.is_enabled', true)->exists();
+
+        return $table ? route('igniterlabs.dinein.reservation', ['hash' => $reservation->hash]) : null;
     }
 }

@@ -48,7 +48,10 @@ class Schedules
                     'times' => collect($times)->map(fn(mixed $time): string => Hours::clock($time))->unique()->values()->all(),
                 ])->filter(fn(array $day): bool => $day['times'] !== [])->values()->all(),
             ];
-        })->values()->all();
+        })->when(
+            DineInTables::installed() && DineInTables::locked(),
+            fn($options) => $options->where('code', 'dinein'),
+        )->values()->all();
     }
 
     /**

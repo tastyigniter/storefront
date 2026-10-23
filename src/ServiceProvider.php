@@ -9,6 +9,7 @@ use Igniter\PayRegister\Models\PaymentProfile;
 use Igniter\Storefront\Http\Middleware\PreserveInertiaPayload;
 use Igniter\Storefront\Http\Middleware\RenderStaticPages;
 use Igniter\Storefront\Http\RouteRegistrar;
+use Igniter\Storefront\Support\InertiaExceptions;
 use Igniter\Storefront\Support\PageRouter;
 use Igniter\Storefront\Support\ThemeGate;
 use Igniter\User\Models\Customer;
@@ -30,6 +31,8 @@ class ServiceProvider extends BaseServiceProvider
 
     public function boot(): void
     {
+        InertiaExceptions::register($this->app);
+
         // Static pages render through Inertia; the JSON guard wraps everything, including the
         // impersonation banner middleware, so it cannot append HTML to Inertia JSON.
         $this->app['router']->prependMiddlewareToGroup('igniter', RenderStaticPages::class);

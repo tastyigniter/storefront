@@ -42,7 +42,7 @@ it('shortens a long restaurant name for the home screen', function(): void {
 
 it('uses the page colour and one uploaded icon', function(): void {
     setThemeSettings([
-        'color_background' => '#142033',
+        'color_neutral_dark' => '#142033',
         'pwa_icon' => 'brand/home-screen.png',
     ]);
 
@@ -89,7 +89,7 @@ it('serves the service worker for the whole site', function(): void {
 });
 
 it('serves the offline page in the page colour', function(): void {
-    setThemeSettings(['color_background' => '#142033', 'color_ring' => '#8fd3c8']);
+    setThemeSettings(['color_neutral_dark' => '#142033', 'color_accent' => '#8fd3c8']);
 
     $this->get(route('igniter.theme.offline'))
         ->assertOk()

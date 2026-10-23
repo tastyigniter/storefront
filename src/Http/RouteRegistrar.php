@@ -19,6 +19,7 @@ use Igniter\Storefront\Http\Controllers\BookingController;
 use Igniter\Storefront\Http\Controllers\CartController;
 use Igniter\Storefront\Http\Controllers\CheckoutController;
 use Igniter\Storefront\Http\Controllers\ContactController;
+use Igniter\Storefront\Http\Controllers\DineInController;
 use Igniter\Storefront\Http\Controllers\FulfillmentController;
 use Igniter\Storefront\Http\Controllers\GiftCardController;
 use Igniter\Storefront\Http\Controllers\GroupOrderController;
@@ -33,6 +34,7 @@ use Igniter\Storefront\Http\Controllers\WebAppController;
 use Igniter\Storefront\Http\Middleware\AuthenticateCustomer;
 use Igniter\Storefront\Http\Middleware\HandleInertiaRequests;
 use Igniter\Storefront\Http\Middleware\RedirectIfCustomer;
+use Igniter\Storefront\Support\DineInTables;
 use Igniter\Storefront\Support\GroupOrders;
 use Illuminate\Routing\Router;
 
@@ -125,6 +127,14 @@ class RouteRegistrar
                 $router->delete('account/address/{addressId}', [AddressController::class, 'destroy'])->name('account.address.destroy');
             });
 
+            if (DineInTables::installed()) {
+                $router->post('dine-in/kitchen', [DineInController::class, 'sendToKitchen'])->name('dinein.kitchen');
+                $router->post('dine-in/request', [DineInController::class, 'requests'])->name('dinein.request');
+                $router->post('dine-in/course', [DineInController::class, 'course'])->name('dinein.course');
+                $router->post('dine-in/pay', [DineInController::class, 'pay'])
+                    ->middleware('throttle:60,1')
+                    ->name('dinein.pay');
+            }
         });
     }
 }

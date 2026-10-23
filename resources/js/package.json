@@ -1,6 +1,6 @@
 {
   "name": "@tastyigniter/storefront",
-  "version": "4.0.1",
+  "version": "4.0.3",
   "type": "module",
   "files": [
     "src"
@@ -15,7 +15,9 @@
     "./time": "./src/time.ts",
     "./storefront": "./src/storefront.ts",
     "./formError": "./src/formError.ts",
-    "./focusTrap": "./src/focusTrap.ts"
+    "./focusTrap": "./src/focusTrap.ts",
+    "./inertia": "./src/inertia.ts",
+    "./useOrderProgressPoll": "./src/useOrderProgressPoll.ts"
   },
   "peerDependencies": {
     "vue": "^3.5.0",

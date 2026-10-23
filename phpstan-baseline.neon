@@ -301,6 +301,30 @@ parameters:
 			path: src/Http/Controllers/CheckoutController.php
 
 		-
+			message: '#^Access to constant PAYING_BILL on an unknown class IgniterLabs\\DineIn\\Support\\Seating\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/DineInController.php
+
+		-
+			message: '#^Call to static method remember\(\) on an unknown class IgniterLabs\\DineIn\\Support\\Courses\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/DineInController.php
+
+		-
+			message: '#^Call to static method request\(\) on an unknown class IgniterLabs\\DineIn\\Support\\Tabs\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/DineInController.php
+
+		-
+			message: '#^Call to static method sendToKitchen\(\) on an unknown class IgniterLabs\\DineIn\\Support\\Tabs\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Http/Controllers/DineInController.php
+
+		-
 			message: '#^Access to property \$customer on an unknown class IgniterLabs\\GroupOrder\\Models\\GroupOrder\.$#'
 			identifier: class.notFound
 			count: 1
@@ -655,8 +679,44 @@ parameters:
 			path: src/Support/DineInTables.php
 
 		-
+			message: '#^Access to constant AREA on an unknown class IgniterLabs\\DineIn\\Support\\Seating\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/DineInTables.php
+
+		-
+			message: '#^Access to constant TABLE on an unknown class IgniterLabs\\DineIn\\Support\\Seating\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/DineInTables.php
+
+		-
 			message: '#^Call to an undefined method Igniter\\Local\\Models\\Location\:\:hasDineIn\(\)\.$#'
 			identifier: method.notFound
+			count: 1
+			path: src/Support/DineInTables.php
+
+		-
+			message: '#^Call to method requests\(\) on an unknown class IgniterLabs\\DineIn\\Models\\Tab\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/DineInTables.php
+
+		-
+			message: '#^Call to static method seatedAt\(\) on an unknown class IgniterLabs\\DineIn\\Models\\Tab\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/DineInTables.php
+
+		-
+			message: '#^Class IgniterLabs\\DineIn\\Models\\Tab not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Support/DineInTables.php
+
+		-
+			message: '#^Relation ''menus'' is not found in Igniter\\Cart\\Models\\Order model\.$#'
+			identifier: larastan.relationExistence
 			count: 1
 			path: src/Support/DineInTables.php
 
@@ -891,7 +951,7 @@ parameters:
 		-
 			message: '#^Access to an undefined property Igniter\\Cart\\Models\\Menu\:\:\$categories\.$#'
 			identifier: property.notFound
-			count: 2
+			count: 3
 			path: src/Support/MenuCatalog.php
 
 		-

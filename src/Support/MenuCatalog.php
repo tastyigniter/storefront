@@ -40,7 +40,7 @@ class MenuCatalog
 
         return collect($menuIds)
             ->map(fn(int $id) => $menus->get($id))
-            ->filter()
+            ->filter(fn($menu): bool => $menu instanceof Menu && self::itemAllowed($menu))
             ->take($limit)
             ->map(fn(Menu $menu): array => self::item($menu, $location, (int)($menu->categories->first()?->getKey() ?? 0)))
             ->values()
@@ -103,10 +103,10 @@ class MenuCatalog
             }
         }
 
-        return collect($groups)
+        return self::restrict(collect($groups)
             ->sortBy('priority')
             ->values()
-            ->all();
+            ->all());
     }
 
     public static function find(Location $location, int $menuId): ?array
@@ -116,11 +116,60 @@ class MenuCatalog
             ->whereIsEnabled()
             ->find($menuId);
 
-        if (!$menu instanceof Menu) {
+        if (!$menu instanceof Menu || !self::itemAllowed($menu)) {
             return null;
         }
 
         return self::item($menu, $location, (int)($menu->categories->first()?->getKey() ?? 0));
+    }
+
+    /**
+     * While a table session names category ids, every other category is hidden.
+     * No list means the full menu.
+     *
+     * @param list<array<string, mixed>> $groups
+     * @return list<array<string, mixed>>
+     */
+    protected static function restrict(array $groups): array
+    {
+        $allowed = self::allowedCategories();
+        if ($allowed === null) {
+            return $groups;
+        }
+
+        return array_values(array_filter(
+            $groups,
+            fn(array $group): bool => in_array((int)$group['id'], $allowed, true),
+        ));
+    }
+
+    protected static function itemAllowed(Menu $menu): bool
+    {
+        $allowed = self::allowedCategories();
+        if ($allowed === null) {
+            return true;
+        }
+
+        $ids = $menu->categories->map(fn(Category $category): int => (int)$category->getKey())->all();
+
+        return array_intersect($ids, $allowed) !== [];
+    }
+
+    /**
+     * @return list<int>|null
+     */
+    protected static function allowedCategories(): ?array
+    {
+        if (!DineInTables::installed()) {
+            return null;
+        }
+
+        $allowed = DineInTables::categoryIds();
+        if (!is_array($allowed) || $allowed === []) {
+            return null;
+        }
+
+        return array_values(array_map(intval(...), $allowed));
     }
 
     protected static function item(Menu $menu, Location $location, int $categoryId): array

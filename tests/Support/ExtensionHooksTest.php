@@ -17,10 +17,14 @@ use Igniter\Storefront\Actions\Fulfilment;
 use Igniter\Storefront\Support\CheckoutStatus;
 use Igniter\Storefront\Support\DineInTables;
 use Igniter\Storefront\Support\PageRouter;
+use IgniterLabs\DineIn\Extension;
+use IgniterLabs\DineIn\Models\Tab;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Mockery;
+use ReflectionClass;
 
 afterEach(function(): void {
     DineInTables::$enabled = false;
@@ -128,7 +132,27 @@ it('describes the table a dine-in order is served to', function(): void {
     $order->order_type = 'dinein';
     $order->setAttribute('dining_table_id', $table->getKey());
 
-    expect(DineInTables::details($order))->toBe(['name' => 'Table 4', 'area' => 'Patio', 'guests' => '2–6']);
+    expect(DineInTables::details($order))->toBe(['name' => 'Table 4', 'area' => 'Patio', 'guests' => '']);
+
+    if (!class_exists(Tab::class)) {
+        return;
+    }
+
+    if (!Schema::hasTable('dinein_tabs')) {
+        $migrations = dirname((new ReflectionClass(Extension::class))->getFileName(), 2).'/database/migrations';
+        app('migrator')->run($migrations);
+    }
+
+    Tab::query()->create([
+        'location_id' => $location->getKey(),
+        'dining_table_id' => $table->getKey(),
+        'guest_count' => 5,
+        'status' => Tab::OPEN,
+        'opened_at' => now(),
+        'order_id' => $order->getKey(),
+    ]);
+
+    expect(DineInTables::details($order))->toBe(['name' => 'Table 4', 'area' => 'Patio', 'guests' => '5']);
 });
 
 it('falls back to the table number when the table is gone', function(): void {

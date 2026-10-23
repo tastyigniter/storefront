@@ -19,5 +19,7 @@ final readonly class Config
         public string $pwaDirectory,
         // The theme's own language namespace, e.g. `igniterlabs.glass`. Each theme words its storefront differently.
         public string $langNamespace,
+        /** Theme custom-data key for manifest / offline shell colour (e.g. color_neutral_dark on dark themes). */
+        public string $appBackgroundKey = 'color_neutral_light',
     ) {}
 }

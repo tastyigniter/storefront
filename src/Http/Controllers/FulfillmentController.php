@@ -63,6 +63,7 @@ class FulfillmentController
                 isset($data['longitude']) ? (float)$data['longitude'] : null,
                 isset($data['area_id']) ? (int)$data['area_id'] : null,
                 isset($data['table_id']) ? (int)$data['table_id'] : null,
+                isset($data['guest_count']) ? (int)$data['guest_count'] : null,
             );
 
             return back();

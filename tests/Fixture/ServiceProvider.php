@@ -26,6 +26,7 @@ class ServiceProvider extends BaseServiceProvider
             defaultFontFamily: 'Plus Jakarta Sans',
             pwaDirectory: __DIR__.'/resources/pwa',
             langNamespace: 'storefront.fixture',
+            appBackgroundKey: 'color_neutral_dark',
         ));
     }
 
