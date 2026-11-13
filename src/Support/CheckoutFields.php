@@ -83,13 +83,25 @@ class CheckoutFields
 
     public static function termsUrl(): ?string
     {
-        $slug = (string)ThemeContent::value('checkout_terms_page', 'terms-and-conditions');
+        $slug = (string)self::setting('terms_page', 'checkout_terms_page', 'terms-and-conditions');
 
         return $slug !== '' ? '/'.ltrim($slug, '/') : null;
     }
 
     /**
-     * Same switches as the Orange checkout component, from the Glass theme settings.
+     * A checkout setting from the page builder checkout form block, else from the
+     * theme's Customize > Checkout settings.
+     */
+    protected static function setting(string $blockKey, string $themeKey, mixed $default): mixed
+    {
+        $settings = PageSections::blockSettings('checkout.checkout', 'checkout-form');
+
+        return array_key_exists($blockKey, $settings) ? $settings[$blockKey] : ThemeContent::value($themeKey, $default);
+    }
+
+    /**
+     * Same switches as the Orange checkout component, from the checkout form block
+     * or the theme settings.
      */
     protected static function applyThemeSettings(CheckoutForm $form): void
     {
@@ -97,15 +109,15 @@ class CheckoutFields
             unset($form->fields['termsAgreed']);
         }
 
-        if (!(bool)ThemeContent::value('checkout_telephone_required', true)) {
+        if (!(bool)self::setting('telephone_required', 'checkout_telephone_required', true)) {
             $form->config['rules']['telephone'] = ['nullable', 'regex:/^([0-9\s\-\+\(\)]*)$/i', 'max:20'];
         }
 
-        if (!(bool)ThemeContent::value('checkout_show_comment', true)) {
+        if (!(bool)self::setting('show_comment', 'checkout_show_comment', true)) {
             unset($form->fields['comment']);
         }
 
-        if (!(bool)ThemeContent::value('checkout_show_delivery_comment', true) || !Location::orderTypeIsDelivery()) {
+        if (!(bool)self::setting('show_delivery_comment', 'checkout_show_delivery_comment', true) || !Location::orderTypeIsDelivery()) {
             unset($form->fields['delivery_comment']);
         }
     }

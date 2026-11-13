@@ -38,6 +38,17 @@ it('finds a kitchen that delivers to the address', function(): void {
         ->and(Location::orderType())->toBe(LocationModel::DELIVERY);
 });
 
+it('opens the page the hero search chose once the kitchen is found', function(): void {
+    deliveryArea($this->location);
+    Geocoder::shouldReceive('geocode')->with('10 Downing Street, London')->andReturn(collect([geoPosition()]));
+
+    $this->post(route('igniter.theme.fulfillment'), ['address' => '10 Downing Street, London', 'redirect_to' => 'booking'])
+        ->assertRedirect(route('igniter.theme.booking'));
+
+    $this->post(route('igniter.theme.fulfillment'), ['address' => '10 Downing Street, London', 'redirect_to' => 'account.account'])
+        ->assertSessionHasErrors('redirect_to');
+});
+
 it('searches with a saved address', function(): void {
     $customer = actingAsCustomer();
     $address = Address::factory()->create([

@@ -8,6 +8,7 @@ use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Storefront\Http\Requests\Concerns\ChecksCaptcha;
 use Igniter\Storefront\Storefront;
+use Igniter\Storefront\Support\PageSections;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PlaceReservationRequest extends FormRequest
@@ -44,7 +45,7 @@ class PlaceReservationRequest extends FormRequest
             'first_name' => ['required', 'string', 'max:48'],
             'last_name' => ['required', 'string', 'max:48'],
             'email' => ['required', 'email', 'max:96'],
-            'telephone' => ['required', 'string', 'max:20'],
+            'telephone' => [(PageSections::blockSettings('booking', 'booking-form')['telephone_required'] ?? true) ? 'required' : 'nullable', 'string', 'max:20'],
             'comment' => ['nullable', 'string', 'max:500'],
         ], $this->captchaRules());
     }

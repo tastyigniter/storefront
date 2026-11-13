@@ -7,9 +7,13 @@ namespace Igniter\Storefront\Tests\Http\Controllers;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Local\Models\ReviewSettings;
+use Igniter\Main\Classes\BlockManager;
+use Igniter\Main\Models\ThemePageLayout;
 use Igniter\Reservation\Models\Reservation;
 use Igniter\Storefront\Actions\PlaceReservation;
+use Igniter\Storefront\Blocks\StorefrontBlocks;
 use Igniter\User\Models\Customer;
+use Illuminate\Support\Once;
 use Inertia\Testing\AssertableInertia;
 use RuntimeException;
 
@@ -196,4 +200,26 @@ it('reports a missing or already cancelled booking', function(): void {
     $this->from(route('igniter.theme.home'))
         ->post(route('igniter.theme.reservation.cancel', ['hash' => $reservation->hash]))
         ->assertSessionHasErrors(['form' => lang('igniter.reservation::default.alert_cancel_failed')]);
+});
+
+it('makes the booking phone optional from the booking form block', function(): void {
+    $this->post(route('igniter.theme.booking.store'), booking(['telephone' => '']))
+        ->assertSessionHasErrors('telephone');
+    // Block settings are read once per request; both requests here share one process.
+    Once::flush();
+
+    resolve(BlockManager::class)->registerBlocks('storefront-fixture', StorefrontBlocks::pageBlocks());
+    ThemePageLayout::create([
+        'theme_code' => 'storefront-fixture',
+        'page_code' => 'booking',
+        'sections' => [['id' => 's_booking', 'columns' => [['blocks' => [[
+            'code' => 'booking-form',
+            'settings' => ['telephone_required' => false],
+        ]]]]]],
+    ]);
+
+    $this->post(route('igniter.theme.booking.store'), booking(['telephone' => '']))
+        ->assertSessionHasNoErrors();
+
+    expect(Reservation::query()->where('email', 'jane@example.test')->exists())->toBeTrue();
 });

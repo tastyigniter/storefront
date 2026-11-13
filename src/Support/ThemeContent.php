@@ -12,6 +12,7 @@ use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Main\Classes\Theme;
 use Igniter\Main\Classes\ThemeManager;
 use Igniter\Main\Helpers\ImageHelper;
+use Igniter\Main\Models\Theme as ThemeModel;
 use Igniter\Pages\Classes\MenuManager;
 use Igniter\Pages\Models\Menu as StaticMenu;
 use Igniter\Storefront\Storefront;
@@ -34,6 +35,17 @@ class ThemeContent
     public static function value(string $key, mixed $default = null): mixed
     {
         return self::theme()?->getCustomData()[$key] ?? $default;
+    }
+
+    /**
+     * A value saved for a theme, including keys its Customize form no longer
+     * defines. Used to seed page builder defaults from older settings.
+     */
+    public static function savedValue(string $themeCode, string $key, mixed $default = null): mixed
+    {
+        $data = ThemeModel::query()->where('code', $themeCode)->first()?->data;
+
+        return is_array($data) ? ($data[$key] ?? $default) : $default;
     }
 
     /**
@@ -250,11 +262,12 @@ class ThemeContent
     }
 
     /**
-     * The default location's menu, when the homepage search is replaced by a button.
+     * The default location's menu, when the homepage search is replaced by a button:
+     * by the theme setting, or by the hero block when $force is true.
      */
-    public static function orderButton(): ?string
+    public static function orderButton(bool $force = false): ?string
     {
-        if (!(bool)self::value('home_order_button', false)) {
+        if (!$force && !(bool)self::value('home_order_button', false)) {
             return null;
         }
 
@@ -271,7 +284,7 @@ class ThemeContent
         return (bool)self::value('single_location', false);
     }
 
-    protected static function slides(string $code): array
+    public static function slides(string $code): array
     {
         if ($code === '' || !class_exists(Slider::class)) {
             return [];
@@ -289,7 +302,7 @@ class ThemeContent
         ])->values()->all();
     }
 
-    protected static function banners(array $codes): array
+    public static function banners(array $codes): array
     {
         if ($codes === [] || !class_exists(Banner::class)) {
             return [];

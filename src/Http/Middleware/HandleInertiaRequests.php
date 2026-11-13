@@ -11,6 +11,7 @@ use Igniter\Main\Template\Page;
 use Igniter\Storefront\Storefront;
 use Igniter\Storefront\Support\GroupOrders;
 use Igniter\Storefront\Support\PageMeta;
+use Igniter\Storefront\Support\PageSections;
 use Igniter\Storefront\Support\StorefrontRoutes;
 use Igniter\Storefront\Support\StorefrontState;
 use Igniter\Storefront\Support\ThemeContent;
@@ -65,6 +66,9 @@ class HandleInertiaRequests extends Middleware
             'routes' => StorefrontRoutes::templates(...),
             // Pages with their own context (an order, a static page) pass a `meta` prop instead.
             'meta' => fn(): array => PageMeta::forRoute($request->route()?->getName()),
+            // Page builder sections when the active theme makes this page buildable.
+            // Static pages pass their own `sections` prop instead.
+            'sections' => fn(): array => PageSections::forRoute($request->route()?->getName()),
             // The active theme's language file. Sent once per visit.
             'lang' => Inertia::once(fn(): array => array_replace_recursive(
                 (array)trans(Storefront::config()->langNamespace.'::default'),

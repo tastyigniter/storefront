@@ -9,9 +9,13 @@ use Igniter\Cart\Models\Menu;
 use Igniter\Frontend\Models\CaptchaSettings;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
+use Igniter\Main\Classes\BlockManager;
+use Igniter\Main\Models\ThemePageLayout;
 use Igniter\Pages\Models\Page;
 use Igniter\Storefront\Actions\ManageAccount;
+use Igniter\Storefront\Blocks\StorefrontBlocks;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Once;
 use Inertia\Testing\AssertableInertia;
 use RuntimeException;
 
@@ -142,4 +146,35 @@ it('returns 404 for a disabled static page', function(): void {
     $page->save();
 
     $this->get('/'.$page->permalink_slug)->assertNotFound();
+});
+
+it('makes the contact phone optional from the contact form block', function(): void {
+    Mail::fake();
+    $message = [
+        'full_name' => 'Jane Doe',
+        'email' => 'jane@example.test',
+        'telephone' => '',
+        'subject' => 'contact.subject_comment',
+    ];
+
+    $this->from(route('igniter.theme.contact'))
+        ->post(route('igniter.theme.contact.store'), $message)
+        ->assertSessionHasErrors('telephone');
+    // Block settings are read once per request; both requests here share one process.
+    Once::flush();
+
+    resolve(BlockManager::class)->registerBlocks('storefront-fixture', StorefrontBlocks::pageBlocks());
+    ThemePageLayout::create([
+        'theme_code' => 'storefront-fixture',
+        'page_code' => 'contact',
+        'sections' => [['id' => 's_contact', 'columns' => [['blocks' => [[
+            'code' => 'contact-form',
+            'settings' => ['telephone_required' => false],
+        ]]]]]],
+    ]);
+
+    $this->from(route('igniter.theme.contact'))
+        ->post(route('igniter.theme.contact.store'), $message)
+        ->assertSessionHasNoErrors()
+        ->assertSessionHas('success', 'alert.contact_sent');
 });

@@ -31,6 +31,8 @@ class ServiceProvider extends BaseServiceProvider
 
     public function boot(): void
     {
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'igniterlabs.storefront');
+
         InertiaExceptions::register($this->app);
 
         // Static pages render through Inertia; the JSON guard wraps everything, including the

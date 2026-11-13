@@ -8,8 +8,11 @@ use Igniter\Cart\Classes\OrderManager;
 use Igniter\Cart\Models\Order;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
+use Igniter\Main\Classes\BlockManager;
+use Igniter\Main\Models\ThemePageLayout;
 use Igniter\PayRegister\Models\Payment;
 use Igniter\PayRegister\Payments\Cod;
+use Igniter\Storefront\Blocks\StorefrontBlocks;
 use Igniter\System\Models\Country;
 use Igniter\System\Models\Settings;
 use Illuminate\Support\Facades\Event;
@@ -280,4 +283,38 @@ it('shows the order receipt', function(): void {
 
 it('returns 404 for an unknown receipt', function(): void {
     $this->get(route('igniter.theme.checkout.success', ['hash' => 'missing']))->assertNotFound();
+});
+
+it('applies the page builder checkout form settings when showing and placing an order', function(): void {
+    resolve(BlockManager::class)->registerBlocks('storefront-fixture', StorefrontBlocks::checkoutBlocks());
+    ThemePageLayout::create([
+        'theme_code' => 'storefront-fixture',
+        'page_code' => 'checkout.checkout',
+        'sections' => [['id' => 's_checkout', 'columns' => [['blocks' => [[
+            'code' => 'checkout-form',
+            'settings' => ['telephone_required' => false, 'show_comment' => false, 'terms_page' => null],
+        ]]]]]],
+    ]);
+    addMenuToCart();
+
+    $this->get(route('igniter.theme.checkout.checkout'))
+        ->assertOk()
+        ->assertInertia(fn(AssertableInertia $page): AssertableInertia => $page
+            ->where('fields', fn($fields): bool => !collect($fields)->contains('name', 'comment')
+                && !collect($fields)->contains('name', 'termsAgreed')
+                && collect($fields)->firstWhere('name', 'telephone')['required'] === false));
+
+    // The settings come from the block on the submit request too.
+    $this->postJson(route('igniter.theme.checkout.prepare'), checkoutDetails(['telephone' => '', 'termsAgreed' => 0]))
+        ->assertJsonMissingValidationErrors(['telephone', 'termsAgreed']);
+});
+
+it('falls back to the theme checkout settings without a checkout form block', function(): void {
+    setThemeSettings(['checkout_show_comment' => false]);
+    addMenuToCart();
+
+    $this->get(route('igniter.theme.checkout.checkout'))
+        ->assertOk()
+        ->assertInertia(fn(AssertableInertia $page): AssertableInertia => $page
+            ->where('fields', fn($fields): bool => !collect($fields)->contains('name', 'comment')));
 });

@@ -37,7 +37,9 @@ class FulfillmentController
                 longitude: isset($data['longitude']) ? (float)$data['longitude'] : null,
             );
 
-            $redirect = redirect()->to(StorefrontRoutes::order());
+            // The hero's local search may open another page than the menu.
+            $page = $data['redirect_to'] ?? 'order';
+            $redirect = redirect()->to($page === 'order' ? StorefrontRoutes::order() : route('igniter.theme.'.$page));
             if ($message = DeliveryCoverage::message()) {
                 [$level, $text] = $message;
                 $redirect->with($level, $text);
