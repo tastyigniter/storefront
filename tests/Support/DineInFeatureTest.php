@@ -49,7 +49,10 @@ it('hides every category outside the table menu', function(): void {
 
     session()->forget('igniterlabs_dinein.category_ids');
 
-    expect(MenuCatalog::grouped($this->location, 'delivery'))->toHaveCount(2);
+    $groups = MenuCatalog::grouped($this->location, 'delivery');
+
+    expect(collect($groups)->pluck('id')->all())->toContain((int)$starters->getKey())
+        ->and(collect($groups)->pluck('id')->all())->toContain((int)$mains->getKey());
 });
 
 it('refuses to leave dine-in while the table session is locked', function(): void {
