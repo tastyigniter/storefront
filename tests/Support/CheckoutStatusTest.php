@@ -83,7 +83,7 @@ it('says when delivery is unavailable for the order', function(): void {
 });
 
 it('blocks checkout when the basket cannot be read', function(): void {
-    app()->bind(CartManager::class, fn() => throw new RuntimeException('cart down'));
+    app()->bind(CartManager::class, fn(): never => throw new RuntimeException('cart down'));
 
     expect(CheckoutStatus::current())->toBe([
         'blocked' => true,

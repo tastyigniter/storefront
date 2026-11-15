@@ -80,12 +80,12 @@ class MenuItemList extends ContentBlock
             'label' => $this->lang($label),
             'type' => 'radiotoggle',
             'span' => $span,
-            'default' => 'theme',
+            'default' => 'show',
             'options' => [
-                'theme' => $this->lang('text_theme_setting'),
                 'show' => $this->lang('text_show'),
                 'hide' => $this->lang('text_hide'),
             ],
+            // "theme" was saved before the Customize image settings were removed; it shows.
             'validationRule' => ['in:theme,show,hide'],
         ];
     }

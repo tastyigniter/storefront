@@ -54,21 +54,10 @@ it('waits for three characters before searching', function(): void {
         ->assertExactJson(['suggestions' => []]);
 });
 
-it('suggests nothing when address suggestions are turned off', function(): void {
-    setThemeSettings(['address_suggestions' => 0]);
-    Geocoder::shouldReceive('driver')->never();
-
-    $this->getJson(route('igniter.theme.fulfillment.suggestions', ['query' => 'Hertford']))
-        ->assertOk()
-        ->assertExactJson(['suggestions' => []]);
-});
-
-it('shares whether address suggestions are on, defaulting to on', function(): void {
-    expect(ThemeContent::site('addressSuggestions'))->toBeTrue();
-
+it('keeps address suggestions on, ignoring the removed Customize setting', function(): void {
     setThemeSettings(['address_suggestions' => '0']);
 
-    expect(ThemeContent::site('addressSuggestions'))->toBeFalse();
+    expect(ThemeContent::site('addressSuggestions'))->toBeTrue();
 });
 
 it('returns no suggestions when the geocoder fails', function(): void {

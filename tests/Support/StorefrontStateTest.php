@@ -122,7 +122,7 @@ it('reads plain option values too', function(): void {
 });
 
 it('shares an empty basket when the basket cannot be read', function(): void {
-    app()->bind(CartManager::class, fn() => throw new RuntimeException('cart down'));
+    app()->bind(CartManager::class, fn(): never => throw new RuntimeException('cart down'));
 
     expect(StorefrontState::shared('cart'))->toMatchArray([
         'count' => 0,

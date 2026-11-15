@@ -50,17 +50,19 @@ it('hides the locations link in single location mode', function(): void {
         ->and($titles)->not->toContain('Locations');
 });
 
-it('points the homepage button at the default location', function(): void {
+it('points the hero order button at the default location', function(): void {
     $location = currentLocation();
     $location->makeDefault();
+
+    expect(ThemeContent::orderButton(true))->toBe('/'.$location->permalink_slug.'/order')
+        ->and(ThemeContent::orderButton(false))->toBeNull();
+});
+
+it('ignores the removed homepage order button setting', function(): void {
+    currentLocation()->makeDefault();
     setThemeSettings(['home_order_button' => true]);
 
-    expect(ThemeContent::orderButton())->toBe('/'.$location->permalink_slug.'/order')
-        ->and(ThemeContent::home(null, 'delivery')['orderButton'])->toBe('/'.$location->permalink_slug.'/order');
-
-    setThemeSettings(['home_order_button' => false]);
-
-    expect(ThemeContent::orderButton())->toBeNull();
+    expect(ThemeContent::home(null, 'delivery'))->not->toHaveKey('orderButton');
 });
 
 it('points the homepage button at the order page when the default location has no slug', function(): void {
@@ -68,9 +70,8 @@ it('points the homepage button at the order page when the default location has n
     $location->makeDefault();
     LocationModel::query()->whereKey($location->getKey())->update(['permalink_slug' => '']);
     LocationModel::clearDefaultModel();
-    setThemeSettings(['home_order_button' => true]);
 
-    expect(ThemeContent::orderButton())->toBe(route('igniter.theme.order.current', absolute: false));
+    expect(ThemeContent::orderButton(true))->toBe(route('igniter.theme.order.current', absolute: false));
 });
 
 it('returns no links for a menu the theme does not define', function(): void {

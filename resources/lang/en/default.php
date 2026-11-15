@@ -177,7 +177,6 @@ return [
         'help_categories' => 'Leave empty to show every category.',
         'text_card_row' => 'Rows',
         'text_card_tile' => 'Tiles',
-        'text_theme_setting' => 'Theme setting',
         'text_show' => 'Show',
         'text_hide' => 'Hide',
         'text_all_categories' => 'All categories',

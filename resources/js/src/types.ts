@@ -268,8 +268,6 @@ export interface HomeContent {
     }>;
     featuredTitle: string;
     featured: MenuItem[];
-    /** Default location menu, when the homepage search is replaced by a button. */
-    orderButton?: string | null;
 }
 
 export interface CheckoutField {

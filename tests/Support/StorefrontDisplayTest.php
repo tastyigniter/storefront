@@ -20,12 +20,10 @@ beforeEach(function(): void {
     $this->location = currentLocation();
 });
 
-it('shows dish and category images unless the theme turns them off', function(): void {
-    expect(ThemeContent::site('display'))->toBe(['menuImages' => true, 'categoryImages' => true]);
-
+it('shows dish and category images, ignoring the removed Customize settings', function(): void {
     setThemeSettings(['show_menu_images' => '0', 'show_category_images' => 0]);
 
-    expect(ThemeContent::site('display'))->toBe(['menuImages' => false, 'categoryImages' => false]);
+    expect(ThemeContent::site('display'))->toBe(['menuImages' => true, 'categoryImages' => true]);
 });
 
 it('shares a thumbnail with each basket line', function(): void {

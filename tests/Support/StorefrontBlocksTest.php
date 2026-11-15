@@ -9,7 +9,7 @@ use Igniter\Main\Classes\BaseBlock;
 use Igniter\Main\Classes\BlockManager;
 use Igniter\Main\Classes\ThemeManager;
 use Igniter\Main\Models\Theme as ThemeModel;
-use Igniter\Main\Models\ThemePageLayout;
+use Igniter\Main\Models\ThemePage;
 use Igniter\Storefront\Blocks\AccountNav;
 use Igniter\Storefront\Blocks\Banners;
 use Igniter\Storefront\Blocks\Breadcrumb;
@@ -131,7 +131,7 @@ it('resolves image, hero, banners and featured data', function(): void {
 });
 
 it('reads values saved for a theme, including removed fields', function(): void {
-    ThemeModel::query()->where('code', 'storefront-fixture')->update(['data' => json_encode(['hero_title' => 'Saved hero'])]);
+    ThemeModel::query()->where('code', 'storefront-fixture')->update(['data' => ['hero_title' => 'Saved hero']]);
 
     expect(ThemeContent::savedValue('storefront-fixture', 'hero_title'))->toBe('Saved hero')
         ->and(ThemeContent::savedValue('storefront-fixture', 'missing', 'default'))->toBe('default')
@@ -148,7 +148,7 @@ it('defines the menu page blocks', function(): void {
         ->and(array_keys($categories->defineFields()))->toBe(['show_search', 'show_allergen_filter', 'sticky'])
         ->and(array_keys($items->defineFields()))->toBe(['categories', 'card_style', 'columns', 'item_images', 'category_covers', 'hide_unavailable', 'show_group_order_bar'])
         ->and($items->getDetails())->toMatchArray(['unique' => true, 'wide' => true, 'pages' => ['order']])
-        ->and($items->defaults())->toMatchArray(['card_style' => 'row', 'columns' => '3', 'item_images' => 'theme', 'hide_unavailable' => false, 'show_group_order_bar' => true])
+        ->and($items->defaults())->toMatchArray(['card_style' => 'row', 'columns' => '3', 'item_images' => 'show', 'hide_unavailable' => false, 'show_group_order_bar' => true])
         ->and($header->summary([]))->toBe('')
         ->and($categories->summary([]))->toBe('')
         ->and($items->summary(['categories' => []]))->toBe('All categories')
@@ -192,7 +192,7 @@ it('reads block settings for a page', function(): void {
     expect(PageSections::blockSettings('locations', 'checkout-form'))->toBe([])
         ->and(PageSections::blockSettings('checkout.checkout', 'checkout-form'))->toBe([]);
 
-    ThemePageLayout::create([
+    ThemePage::create([
         'theme_code' => 'storefront-fixture',
         'page_code' => 'contact',
         'sections' => [['id' => 's_1', 'columns' => [['blocks' => [['code' => 'hero', 'settings' => []]]]]]],

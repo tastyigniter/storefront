@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Igniter\Storefront\Tests\Support;
 
 use Igniter\Main\Classes\BlockManager;
-use Igniter\Main\Models\ThemePageLayout;
+use Igniter\Main\Models\ThemePage;
 use Igniter\Pages\Models\Page;
 use Igniter\Storefront\Support\PageSections;
 use Igniter\Storefront\Tests\Fixture\HeroBlock;
@@ -37,7 +37,7 @@ it('resolves the theme default sections for a buildable page', function(): void 
 });
 
 it('resolves saved sections over the theme default', function(): void {
-    ThemePageLayout::create([
+    ThemePage::create([
         'theme_code' => 'storefront-fixture',
         'page_code' => 'contact',
         'sections' => [['id' => 's_saved', 'layout' => 'cols-2', 'columns' => [['blocks' => [['code' => 'hero']]]]]],

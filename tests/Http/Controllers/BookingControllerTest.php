@@ -8,7 +8,7 @@ use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Local\Models\ReviewSettings;
 use Igniter\Main\Classes\BlockManager;
-use Igniter\Main\Models\ThemePageLayout;
+use Igniter\Main\Models\ThemePage;
 use Igniter\Reservation\Models\Reservation;
 use Igniter\Storefront\Actions\PlaceReservation;
 use Igniter\Storefront\Blocks\StorefrontBlocks;
@@ -209,7 +209,7 @@ it('makes the booking phone optional from the booking form block', function(): v
     Once::flush();
 
     resolve(BlockManager::class)->registerBlocks('storefront-fixture', StorefrontBlocks::pageBlocks());
-    ThemePageLayout::create([
+    ThemePage::create([
         'theme_code' => 'storefront-fixture',
         'page_code' => 'booking',
         'sections' => [['id' => 's_booking', 'columns' => [['blocks' => [[

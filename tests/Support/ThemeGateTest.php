@@ -22,7 +22,7 @@ it('is inactive without an active theme', function(): void {
 });
 
 it('is inactive when the theme cannot be loaded', function(): void {
-    app()->bind(ThemeManager::class, fn() => throw new RuntimeException('no database'));
+    app()->bind(ThemeManager::class, fn(): never => throw new RuntimeException('no database'));
 
     expect(ThemeGate::active())->toBeFalse();
 });

@@ -6,6 +6,8 @@ namespace Igniter\Storefront\Tests\Support;
 
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
+use Igniter\Main\Classes\ThemeManager;
+use Igniter\Main\Models\ThemePage;
 use Igniter\Pages\Models\Page;
 use Igniter\Reservation\Models\Reservation;
 use Igniter\Storefront\Support\PageMeta;
@@ -24,6 +26,23 @@ it('uses the site name and description on the homepage', function(): void {
         'title' => 'Glass Kitchen',
         'description' => 'Seasonal plates, delivered.',
     ]);
+});
+
+it('uses the title and description saved in the page builder', function(): void {
+    $themeCode = resolve(ThemeManager::class)->getActiveThemeCode();
+    ThemePage::saveSettings($themeCode, 'order', ['title' => 'Our menu', 'description' => 'Pick your plates']);
+    ThemePage::saveSettings($themeCode, 'home', ['title' => '', 'meta_title' => 'Fresh food', 'meta_description' => 'Cooked daily']);
+
+    expect(PageMeta::forRoute('igniter.theme.order'))->toBe([
+        'title' => 'Our menu - Glass Kitchen',
+        'description' => 'Pick your plates',
+    ])
+        ->and(PageMeta::forRoute('igniter.theme.home'))->toBe([
+            'title' => 'Fresh food - Glass Kitchen',
+            'description' => 'Cooked daily',
+        ]);
+
+    ThemePage::clearSettingsCache();
 });
 
 it('titles storefront pages with the site name', function(): void {

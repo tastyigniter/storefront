@@ -9,7 +9,7 @@ use Igniter\Cart\Models\Order;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Main\Classes\BlockManager;
-use Igniter\Main\Models\ThemePageLayout;
+use Igniter\Main\Models\ThemePage;
 use Igniter\PayRegister\Models\Payment;
 use Igniter\PayRegister\Payments\Cod;
 use Igniter\Storefront\Blocks\StorefrontBlocks;
@@ -201,7 +201,7 @@ it('explains why an order cannot be prepared', function(): void {
 
 it('hides unexpected errors while preparing an order', function(): void {
     addMenuToCart();
-    Event::listen('igniter.orange.validateCheckout', fn() => throw new RuntimeException('extension failed'));
+    Event::listen('igniter.orange.validateCheckout', fn(): never => throw new RuntimeException('extension failed'));
 
     $this->postJson(route('igniter.theme.checkout.prepare'), checkoutDetails())
         ->assertStatus(422)
@@ -287,7 +287,7 @@ it('returns 404 for an unknown receipt', function(): void {
 
 it('applies the page builder checkout form settings when showing and placing an order', function(): void {
     resolve(BlockManager::class)->registerBlocks('storefront-fixture', StorefrontBlocks::checkoutBlocks());
-    ThemePageLayout::create([
+    ThemePage::create([
         'theme_code' => 'storefront-fixture',
         'page_code' => 'checkout.checkout',
         'sections' => [['id' => 's_checkout', 'columns' => [['blocks' => [[

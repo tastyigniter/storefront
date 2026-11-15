@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Igniter\Storefront\Support;
 
 use Igniter\Local\Facades\Location;
+use Igniter\Main\Classes\ThemeManager;
+use Igniter\Main\Models\ThemePage;
 use Igniter\Storefront\Storefront;
 use Illuminate\Support\Str;
 
@@ -32,17 +34,31 @@ class PageMeta
     public static function forRoute(?string $routeName): array
     {
         $route = Str::after((string)$routeName, 'igniter.theme.');
+        $saved = self::savedSettings($route);
+        $savedTitle = trim((string)($saved['meta_title'] ?? '') ?: (string)($saved['title'] ?? ''));
+        $savedDescription = trim((string)($saved['meta_description'] ?? '') ?: (string)($saved['description'] ?? ''));
+
         if (!in_array($route, self::ROUTES, true)) {
-            return self::make(null);
+            return self::make($savedTitle ?: null, $savedDescription ?: null);
         }
 
         $key = str_replace('.', '_', $route);
         $location = (string)(Location::current() ?? Location::currentOrDefault())?->location_name;
 
         return self::make(
-            self::line('meta.'.$key.'_title'),
-            self::line('meta.'.$key.'_description', ['location' => $location ?: self::siteName()]),
+            $savedTitle ?: self::line('meta.'.$key.'_title'),
+            $savedDescription ?: self::line('meta.'.$key.'_description', ['location' => $location ?: self::siteName()]),
         );
+    }
+
+    /**
+     * Settings saved for the page in the page builder (Design > Themes > Page builder > page settings).
+     */
+    protected static function savedSettings(string $pageCode): array
+    {
+        $themeCode = resolve(ThemeManager::class)->getActiveThemeCode();
+
+        return $themeCode && $pageCode !== '' ? ThemePage::resolveSettings($themeCode, $pageCode) : [];
     }
 
     /**

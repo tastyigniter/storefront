@@ -26,7 +26,7 @@ class AddressSuggestions
     public static function search(string $query): array
     {
         $query = trim($query);
-        if (!self::enabled() || mb_strlen($query) < self::MIN_LENGTH) {
+        if (mb_strlen($query) < self::MIN_LENGTH) {
             return [];
         }
 
@@ -57,12 +57,6 @@ class AddressSuggestions
             })
             ->values()
             ->all();
-    }
-
-    /** Customize > General > Address suggestions, on unless turned off. */
-    public static function enabled(): bool
-    {
-        return (bool)ThemeContent::value('address_suggestions', true);
     }
 
     /**

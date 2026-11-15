@@ -78,13 +78,15 @@ class ThemeContent
             'brand' => self::brand(),
             'themeColor' => ThemeColors::background(),
             'pwaIcon' => self::pwaIcon(),
-            // Customize > General. Category images only apply to themes that draw category banners.
+            // Dish and category images show by default; the order page's menu block can hide
+            // them for its own list.
             'display' => [
-                'menuImages' => (bool)self::value('show_menu_images', true),
-                'categoryImages' => (bool)self::value('show_category_images', true),
+                'menuImages' => true,
+                'categoryImages' => true,
             ],
-            // Customize > General: suggest addresses as the customer types.
-            'addressSuggestions' => (bool)self::value('address_suggestions', true),
+            // Addresses are suggested as the customer types; a hero block can turn this off
+            // for its own search.
+            'addressSuggestions' => true,
         ];
 
         return self::read($site, $key, $default);
@@ -257,17 +259,16 @@ class ThemeContent
             'featured' => $location instanceof LocationModel && $featuredIds
                 ? MenuCatalog::featured($location, $orderType, $featuredIds, max(1, (int)self::value('featured_limit', 6)))
                 : [],
-            'orderButton' => self::orderButton(),
         ];
     }
 
     /**
-     * The default location's menu, when the homepage search is replaced by a button:
-     * by the theme setting, or by the hero block when $force is true.
+     * The default location's menu, for a hero block that shows a button to it instead of
+     * the address search, or null when the block keeps the search.
      */
-    public static function orderButton(bool $force = false): ?string
+    public static function orderButton(bool $show): ?string
     {
-        if (!$force && !(bool)self::value('home_order_button', false)) {
+        if (!$show) {
             return null;
         }
 
