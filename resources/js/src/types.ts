@@ -18,6 +18,8 @@ export interface LocationCard {
     rating?: { score: number; count: number } | null;
     /** Minutes until the soonest order, keyed by order type (delivery, collection). */
     leadTimes?: Partial<Record<'delivery' | 'collection', number>>;
+    /** Whether the location is featured (Multi Vendor). */
+    featured?: boolean;
 }
 
 export interface CartLine {

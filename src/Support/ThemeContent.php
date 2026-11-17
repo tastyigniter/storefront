@@ -43,9 +43,20 @@ class ThemeContent
      */
     public static function savedValue(string $themeCode, string $key, mixed $default = null): mixed
     {
-        $data = ThemeModel::query()->where('code', $themeCode)->first()?->data;
+        return self::savedData($themeCode)[$key] ?? $default;
+    }
 
-        return is_array($data) ? ($data[$key] ?? $default) : $default;
+    /**
+     * Everything saved for a theme, queried once per request so a theme's
+     * meta/builder.php can read many keys without a query each.
+     */
+    protected static function savedData(string $themeCode): array
+    {
+        return once(function() use ($themeCode): array {
+            $data = ThemeModel::query()->where('code', $themeCode)->first()?->data;
+
+            return is_array($data) ? $data : [];
+        });
     }
 
     /**

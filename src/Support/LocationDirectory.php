@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace Igniter\Storefront\Support;
 
+use Igniter\Flame\Geolite\Model\Coordinates;
+use Igniter\Local\Classes\FeaturedLocations;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Storefront\Storefront;
 
 /**
- * Location listing: search, order type and cuisine filters (multivendor), nearest first.
+ * Location listing: search, order type and cuisine filters (multivendor), nearest first,
+ * with featured locations first.
  */
 class LocationDirectory
 {
@@ -17,11 +20,14 @@ class LocationDirectory
 
     /**
      * Locations matching the cuisine, search text and order type, by name or nearest first.
+     * Featured locations go first: those that deliver to the customer's position when it's
+     * known, otherwise all of them.
      *
      * @param array{lat: float, lng: float}|null $from Where to measure distance from.
+     * @param array{lat: float, lng: float}|null $position Where the customer is, for the featured boost.
      * @return list<array<string, mixed>>
      */
-    public static function locations(?int $cuisineId, string $search = '', ?string $orderType = null, ?array $from = null): array
+    public static function locations(?int $cuisineId, string $search = '', ?string $orderType = null, ?array $from = null, ?array $position = null): array
     {
         $locations = StorefrontState::locations();
         $class = 'IgniterLabs\\MultiVendor\\Models\\Cuisine';
@@ -39,7 +45,35 @@ class LocationDirectory
             $locations = array_filter($locations, fn(array $location): bool => (bool)$location[$flag]);
         }
 
-        return $from ? self::nearestFirst(array_values($locations), $from) : array_values($locations);
+        $locations = $from ? self::nearestFirst(array_values($locations), $from) : array_values($locations);
+
+        return self::featuredFirst($locations, $position ?? $from);
+    }
+
+    /**
+     * Flags featured locations, and moves the boosted ones to the front in their current order.
+     *
+     * @param list<array<string, mixed>> $locations
+     * @param array{lat: float, lng: float}|null $position
+     * @return list<array<string, mixed>>
+     */
+    protected static function featuredFirst(array $locations, ?array $position): array
+    {
+        $featured = resolve(FeaturedLocations::class);
+        $boosted = $featured->ids() === [] ? [] : $featured->boostedIds($position ? new Coordinates($position['lat'], $position['lng']) : null);
+        $first = [];
+        $rest = [];
+
+        foreach ($locations as $location) {
+            $location['featured'] = $featured->isFeatured((int)$location['id']);
+            if (in_array((int)$location['id'], $boosted, true)) {
+                $first[] = $location;
+            } else {
+                $rest[] = $location;
+            }
+        }
+
+        return [...$first, ...$rest];
     }
 
     /**

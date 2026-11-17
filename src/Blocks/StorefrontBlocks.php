@@ -174,6 +174,7 @@ class StorefrontBlocks
             Hero::class,
             Banners::class,
             FeaturedItems::class,
+            FeaturedLocations::class,
         ];
     }
 

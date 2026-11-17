@@ -24,6 +24,8 @@ return [
         'block_banners_desc' => 'Banners from Marketing > Banners.',
         'block_featured_items' => 'Featured menu items',
         'block_featured_items_desc' => 'A grid of chosen menu items.',
+        'block_featured_locations' => 'Featured locations',
+        'block_featured_locations_desc' => 'Featured locations, shuffled on each page load. Hidden when none are featured.',
         'block_page_view_desc' => 'The page\'s own content. It cannot be removed.',
         'block_local_header' => 'Location header',
         'block_local_header_desc' => 'The location\'s photo, name, hours, address, rating and order types.',
@@ -152,6 +154,7 @@ return [
         'label_banners' => 'Banners',
         'label_featured_limit' => 'Menu items to show',
         'label_featured_items' => 'Menu items',
+        'label_featured_locations_limit' => 'Locations to show',
 
         'help_html' => 'Scripts, event handlers and unsafe links are removed when saved. Only YouTube, Vimeo and Google Maps embeds are allowed.',
         'help_slider' => 'Slides come from Marketing > Sliders. Each image\'s title and description become its caption.',

@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Igniter\Storefront\Tests\Http;
 
+use Igniter\Local\Classes\FeaturedLocations;
 use Igniter\Local\Facades\Location;
 use Igniter\Local\Models\Location as LocationModel;
 use Igniter\Storefront\Support\LocationDirectory;
 use Igniter\System\Models\Settings;
+use Illuminate\Support\Facades\Event;
 use Inertia\Testing\AssertableInertia;
 
 beforeEach(function(): void {
@@ -95,4 +97,32 @@ it('pages the directory and keeps the filters', function(): void {
             ->component('Locations/Index')
             ->where('locations.0.name', 'Soho Kitchen')
             ->where('pagination', ['currentPage' => 2, 'lastPage' => 2, 'perPage' => 2, 'total' => 3, 'from' => 3, 'to' => 3]));
+});
+
+it('lists featured locations first and flags them', function(): void {
+    resolve(FeaturedLocations::class)->clearCache();
+    Event::listen('igniter.local.featuredLocationIds', fn(): array => [$this->nowhere->getKey()]);
+
+    $locations = LocationDirectory::locations(null);
+
+    expect(names($locations))->toBe(['Ghost Kitchen', 'Leeds Diner', 'Soho Kitchen'])
+        ->and(array_column($locations, 'featured'))->toBe([true, false, false]);
+
+    resolve(FeaturedLocations::class)->clearCache();
+});
+
+it('only lists featured locations that deliver to the customer first', function(): void {
+    resolve(FeaturedLocations::class)->clearCache();
+    $this->leeds->delivery_areas()->create([
+        'name' => 'Leeds', 'type' => 'circle', 'is_default' => 1,
+        'boundaries' => ['circle' => json_encode(['lat' => 53.8008, 'lng' => -1.5491, 'radius' => 5000])],
+    ]);
+    Event::listen('igniter.local.featuredLocationIds', fn(): array => [$this->leeds->getKey(), $this->nowhere->getKey()]);
+
+    $locations = LocationDirectory::locations(null, '', null, null, ['lat' => 53.8, 'lng' => -1.55]);
+
+    expect(names($locations))->toBe(['Leeds Diner', 'Ghost Kitchen', 'Soho Kitchen'])
+        ->and(array_column($locations, 'featured'))->toBe([true, true, false]);
+
+    resolve(FeaturedLocations::class)->clearCache();
 });

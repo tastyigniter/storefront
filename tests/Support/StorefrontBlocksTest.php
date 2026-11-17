@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Igniter\Storefront\Tests\Support;
 
 use Igniter\Cart\Models\Menu;
+use Igniter\Local\Models\Location;
 use Igniter\Main\Classes\BaseBlock;
 use Igniter\Main\Classes\BlockManager;
 use Igniter\Main\Classes\ThemeManager;
@@ -19,6 +20,7 @@ use Igniter\Storefront\Blocks\CheckoutForm;
 use Igniter\Storefront\Blocks\CheckoutHeader;
 use Igniter\Storefront\Blocks\ContactForm;
 use Igniter\Storefront\Blocks\FeaturedItems;
+use Igniter\Storefront\Blocks\FeaturedLocations;
 use Igniter\Storefront\Blocks\Hero;
 use Igniter\Storefront\Blocks\Html;
 use Igniter\Storefront\Blocks\Image;
@@ -38,6 +40,8 @@ use Igniter\Storefront\Blocks\Spacer;
 use Igniter\Storefront\Blocks\StorefrontBlocks;
 use Igniter\Storefront\Support\PageSections;
 use Igniter\Storefront\Support\ThemeContent;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Lang;
 
 it('lists the shared storefront blocks', function(): void {
@@ -94,6 +98,7 @@ it('defines content block fields', function(string $class, string $code, array $
     [Hero::class, 'hero', ['title', 'text', 'slider_code', 'slider_interval', 'hide_search', 'redirect_page', 'address_autocomplete', 'show_locate']],
     [Banners::class, 'banners', ['banner_codes']],
     [FeaturedItems::class, 'featured-items', ['title', 'limit', 'items']],
+    [FeaturedLocations::class, 'featured-locations', ['title', 'limit']],
 ]);
 
 it('removes unsafe markup from html settings', function(): void {
@@ -136,6 +141,18 @@ it('reads values saved for a theme, including removed fields', function(): void 
     expect(ThemeContent::savedValue('storefront-fixture', 'hero_title'))->toBe('Saved hero')
         ->and(ThemeContent::savedValue('storefront-fixture', 'missing', 'default'))->toBe('default')
         ->and(ThemeContent::savedValue('not-a-theme', 'hero_title', 'none'))->toBe('none');
+});
+
+it('queries a theme\'s saved values once', function(): void {
+    ThemeModel::query()->where('code', 'storefront-fixture')->update(['data' => ['hero_title' => 'Saved hero', 'hero_text' => 'Fast']]);
+
+    DB::enableQueryLog();
+
+    expect(ThemeContent::savedValue('storefront-fixture', 'hero_title'))->toBe('Saved hero')
+        ->and(ThemeContent::savedValue('storefront-fixture', 'hero_text'))->toBe('Fast')
+        ->and(ThemeContent::savedValue('storefront-fixture', 'missing', 'default'))->toBe('default')
+        ->and(ThemeContent::savedValue('not-a-theme', 'hero_title', 'none'))->toBe('none')
+        ->and(collect(DB::getQueryLog())->pluck('query')->filter(fn(string $sql): bool => str_contains($sql, 'themes')))->toHaveCount(2);
 });
 
 it('defines the menu page blocks', function(): void {
@@ -263,4 +280,26 @@ it('resolves the hero search settings', function(): void {
         ])
         ->and($hero->resolve(['redirect_page' => 'admin'])['redirectPage'])->toBe('order')
         ->and(array_keys($hero->defineFields()['redirect_page']['options']()))->toBe(Hero::REDIRECT_PAGES);
+});
+
+it('resolves featured locations, shuffled up to the limit', function(): void {
+    resolve(\Igniter\Local\Classes\FeaturedLocations::class)->clearCache();
+    $featured = Location::factory()->count(3)->create(['location_status' => true]);
+    $disabled = Location::factory()->create(['location_status' => false]);
+    Event::listen('igniter.local.featuredLocationIds', fn(): array => [...$featured->modelKeys(), $disabled->getKey()]);
+
+    $resolved = (new FeaturedLocations)->resolve(['title' => 'Stars', 'limit' => 2]);
+
+    expect($resolved['title'])->toBe('Stars')
+        ->and($resolved['locations'])->toHaveCount(2)
+        ->and(array_diff(array_column($resolved['locations'], 'id'), $featured->modelKeys()))->toBe([])
+        ->and($resolved['locations'][0])->toHaveKeys(['name', 'slug', 'address', 'image', 'featured']);
+
+    resolve(\Igniter\Local\Classes\FeaturedLocations::class)->clearCache();
+});
+
+it('resolves no featured locations without any', function(): void {
+    resolve(\Igniter\Local\Classes\FeaturedLocations::class)->clearCache();
+
+    expect((new FeaturedLocations)->resolve(['title' => 'Stars'])['locations'])->toBe([]);
 });

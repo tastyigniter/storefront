@@ -32,11 +32,11 @@ class LocationController
         ]);
         $cuisine = $request->integer('cuisine') ?: null;
         $sort = $data['sort'] ?? 'name';
-        $from = $sort === 'distance'
-            ? LocationDirectory::origin(isset($data['lat']) ? (float)$data['lat'] : null, isset($data['lng']) ? (float)$data['lng'] : null)
-            : null;
+        // Where the customer is, for nearest first and for featuring the locations that deliver to them.
+        $position = LocationDirectory::origin(isset($data['lat']) ? (float)$data['lat'] : null, isset($data['lng']) ? (float)$data['lng'] : null);
+        $from = $sort === 'distance' ? $position : null;
 
-        $page = Pagination::items(LocationDirectory::locations($cuisine, (string)($data['search'] ?? ''), $data['type'] ?? null, $from));
+        $page = Pagination::items(LocationDirectory::locations($cuisine, (string)($data['search'] ?? ''), $data['type'] ?? null, $from, $position));
 
         return Inertia::render('Locations/Index', [
             'locations' => $page['items'],
