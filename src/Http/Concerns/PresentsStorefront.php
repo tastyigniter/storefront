@@ -152,7 +152,7 @@ trait PresentsStorefront
             'comment' => $reservation->comment,
             'telephone' => $reservation->telephone,
             'status' => (string)($reservation->status_name ?? ''),
-            'canCancel' => !$reservation->isCanceled() && (bool)$reservation->isCancelable(),
+            'canCancel' => !$reservation->isCanceled() && $reservation->isCancelable(),
             'preorderUrl' => self::reservationPreorderUrl($reservation),
             'confirmEmail' => CancelConfirmation::required($reservation->customer_id ? (int)$reservation->customer_id : null),
             'isCanceled' => $reservation->isCanceled(),
