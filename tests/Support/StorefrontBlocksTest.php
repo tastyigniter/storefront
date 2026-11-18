@@ -143,7 +143,7 @@ it('reads values saved for a theme, including removed fields', function(): void 
         ->and(ThemeContent::savedValue('not-a-theme', 'hero_title', 'none'))->toBe('none');
 });
 
-it('queries a theme\'s saved values once', function(): void {
+it("queries a theme's saved values once", function(): void {
     ThemeModel::query()->where('code', 'storefront-fixture')->update(['data' => ['hero_title' => 'Saved hero', 'hero_text' => 'Fast']]);
 
     DB::enableQueryLog();
