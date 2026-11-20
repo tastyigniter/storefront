@@ -274,7 +274,6 @@ return [
         'help_preview_mode' => 'Shows the order type and time without letting customers change them.',
         'label_overlap_above' => 'Overlap the section above',
         'help_overlap_above' => 'The card is pulled up over the bottom of the banner above it.',
-        'text_full_width' => 'Full width',
         'text_one' => 'One',
         'text_two' => 'Two',
         'text_three' => 'Three',
